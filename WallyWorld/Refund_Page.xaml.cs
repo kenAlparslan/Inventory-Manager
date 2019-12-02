@@ -16,14 +16,13 @@ using System.Windows.Shapes;
 namespace WallyWorld
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Refund_Page.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Refund_Page : Page
     {
-        public MainWindow()
+        public Refund_Page()
         {
             InitializeComponent();
-            Main.NavigationService.Navigate(new Main_Page());
         }
     }
 }
