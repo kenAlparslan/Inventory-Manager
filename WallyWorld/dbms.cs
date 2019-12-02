@@ -22,7 +22,6 @@ namespace WallyWorld
 
             string sqlStatement = @" insert into Customer (first_Name , last_Name , telephone)
                                      values (@f, @l, @p);";
-            Console.WriteLine(sqlStatement);
 
             MySqlConnection connection = new MySqlConnection(connectionString);
             MySqlCommand command = new MySqlCommand(sqlStatement, connection);
@@ -54,6 +53,31 @@ namespace WallyWorld
 
             connection.Close();
             return dt;
+        }
+
+        public List<string> GetBranches()
+        {
+            string sqlStatement = @"select branchName from branch;";
+            List<string> result = new List<string>();
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            int i = 0;
+            connection.Open();
+            using (MySqlDataReader rdr = command.ExecuteReader())
+            {
+                while(rdr.Read())
+                {
+                    result.Add(rdr["branchName"].ToString());
+                    ++i;
+                }
+
+            }
+
+            connection.Close();
+            command.Dispose();
+
+            return result;
+
         }
     }
 }

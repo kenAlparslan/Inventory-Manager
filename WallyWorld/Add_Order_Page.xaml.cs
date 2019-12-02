@@ -21,6 +21,8 @@ namespace WallyWorld
     /// </summary>
     public partial class Add_Order_Page : Page
     {
+        private int quant;
+        private decimal pr;
         public Add_Order_Page()
         {
             InitializeComponent();
@@ -56,14 +58,22 @@ namespace WallyWorld
             string name = r["name"].ToString();
             int totalStock = int.Parse(r["stock"].ToString());
             decimal price = decimal.Parse(r["wPrice"].ToString(), System.Globalization.NumberStyles.Currency);
-            
+            List<string> branches = new List<string>();
+            pr = price;
             for(int i=1; i<=totalStock; ++i)
             {
                 stockCB.Items.Add(i);
             }
 
+            DBMS dbms = new DBMS();
+            branches = dbms.GetBranches();
+            for(int i=0; i<branches.Count; ++i)
+            {
+                BranchCB.Items.Add(branches.ElementAt(i));
+            }
+
             NameTB.Text = name;
-            
+            CalculatedTotal.Text = "$"+(price * quant).ToString();
             Product_Border.Visibility = Visibility.Visible;
             
         }
@@ -79,6 +89,12 @@ namespace WallyWorld
             addCust.Show();
             
             
+        }
+
+        private void ComboBox_Selection_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            quant = int.Parse(stockCB.SelectedItem.ToString());
+            CalculatedTotal.Text = "$" + (pr * quant).ToString();
         }
     }
 }

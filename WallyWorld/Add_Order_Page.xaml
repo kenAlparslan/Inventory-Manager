@@ -36,7 +36,7 @@
                 <TextBlock x:Name="ProductNameTB" Text="Product " Foreground="Blue" FontSize="17"  Margin="5,0,5,5"></TextBlock>
                 <TextBlock x:Name="NameTB" Text="" FontSize="15" Margin="5,5,5,5"></TextBlock>
                 <TextBlock x:Name="QuantityTB" Text="Quantity" Foreground="Blue" FontSize="17" Margin="5,0,5,5"></TextBlock>
-                <ComboBox  x:Name="stockCB" SelectedIndex="0" Margin="5,5,5,5" Width="50" HorizontalAlignment="Left" ></ComboBox>
+                <ComboBox  x:Name="stockCB" SelectionChanged="ComboBox_Selection_Changed" SelectedIndex="0" Margin="5,5,5,5" Width="50" HorizontalAlignment="Left" ></ComboBox>
                 <TextBlock x:Name="BranchTB" Text="Branch" Foreground="Blue" FontSize="17" Margin="5,0,5,5"></TextBlock>
                 <ComboBox  x:Name="BranchCB" SelectedIndex="0" Margin="5,5,5,5" Width="120" HorizontalAlignment="Left" ></ComboBox>
                 <TextBlock x:Name="TotalTB" Text="Total Price" Foreground="Blue" Margin="5,0,5,5" FontSize="17"></TextBlock>
