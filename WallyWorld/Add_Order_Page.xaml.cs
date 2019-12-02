@@ -57,7 +57,14 @@ namespace WallyWorld
             int totalStock = int.Parse(r["stock"].ToString());
             decimal price = decimal.Parse(r["wPrice"].ToString(), System.Globalization.NumberStyles.Currency);
             
+            for(int i=1; i<=totalStock; ++i)
+            {
+                stockCB.Items.Add(i);
+            }
 
+            NameTB.Text = name;
+            
+            Product_Border.Visibility = Visibility.Visible;
             
         }
 
