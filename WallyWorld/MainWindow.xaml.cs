@@ -25,5 +25,6 @@ namespace WallyWorld
             InitializeComponent();
             Main.NavigationService.Navigate(new Main_Page());
         }
+
     }
 }

@@ -31,26 +31,47 @@ namespace WallyWorld
             DBMS dbms = new DBMS();
             DataTable dt = new DataTable();
 
-            DataGridTemplateColumn col1 = new DataGridTemplateColumn();
-            col1.Header = "Select";
+            if (Products.Columns.Count == 4 || Products.Columns.Count == 0)
+            {
+                DataGridTemplateColumn col1 = new DataGridTemplateColumn();
+                col1.Header = "Select";
 
-            FrameworkElementFactory factory1 = new FrameworkElementFactory(typeof(Button));
-            //Binding b1 = new Binding("IsSelected");
-            //b1.Mode = BindingMode.TwoWay;
-            factory1.SetValue(Button.ContentProperty, "Select");
-            factory1.AddHandler(Button.ClickEvent, new RoutedEventHandler(SelectBtn_Click));
-            DataTemplate cellTemplate1 = new DataTemplate();
-            cellTemplate1.VisualTree = factory1;
-            col1.CellTemplate = cellTemplate1;
-
-            Products.Columns.Add(col1);
+                FrameworkElementFactory factory1 = new FrameworkElementFactory(typeof(Button));
+                factory1.SetValue(Button.ContentProperty, "Select");
+                factory1.AddHandler(Button.ClickEvent, new RoutedEventHandler(SelectBtn_Click));
+                DataTemplate cellTemplate1 = new DataTemplate();
+                cellTemplate1.VisualTree = factory1;
+                col1.CellTemplate = cellTemplate1;
+                Products.Columns.Add(col1);
+            }
+            
             dt = dbms.DisplayProducts();
             Products.ItemsSource = dt.DefaultView;
 
         }
         private void SelectBtn_Click(object sender, RoutedEventArgs e)
         {
+            DataRowView r = (DataRowView)((Button)e.Source).DataContext;
+            int id = int.Parse(r["SKU"].ToString());
+            string name = r["name"].ToString();
+            int totalStock = int.Parse(r["stock"].ToString());
+            decimal price = decimal.Parse(r["wPrice"].ToString(), System.Globalization.NumberStyles.Currency);
+            
 
+            
+        }
+
+        private void Add_To_Cart_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void New_Customer_Click(object sender, RoutedEventArgs e)
+        {
+            Window addCust = new Create_Customer();
+            addCust.Show();
+            
+            
         }
     }
 }

@@ -26,7 +26,7 @@ namespace WallyWorld
             InitializeComponent();
         }
 
-        private void Add_Customer_Click(object sender, RoutedEventArgs e)
+        public void Add_Customer_Click(object sender, RoutedEventArgs e)
         {
             string firstName = firstN.Text;
             string lastName = lastN.Text;
@@ -81,12 +81,9 @@ namespace WallyWorld
             
         }
 
-
-
-
         public static bool ValidateString(string string1)
         {
-            List<string> invalidChars = new List<string>() { "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-"};
+            List<string> invalidChars = new List<string>() { "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-" };
             List<string> numbers = new List<string>() { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
             // Check for length
@@ -114,7 +111,6 @@ namespace WallyWorld
                 return true;
             }
         }
-
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Add_Customer_Page());
@@ -122,4 +118,5 @@ namespace WallyWorld
 
       
     }
+ 
 }
