@@ -80,15 +80,15 @@ namespace WallyWorld
 
         }
 
-        public void AddCart(string customerName, string productName, int quantity, string price)
+        public int AddCart(string SKU, string customerName, string productName, int quantity, string price)
         {
             int result;
-            string sqlStatement = @" insert into Cart (CustomerName , ProductName , quantity, price)
-                                     values (@cN, @pN, @q, @p);";
+            string sqlStatement = @" insert into Cart (SKU, CustomerName , ProductName , quantity, price)
+                                     values (@s, @cN, @pN, @q, @p);";
 
             MySqlConnection connection = new MySqlConnection(connectionString);
             MySqlCommand command = new MySqlCommand(sqlStatement, connection);
-
+            command.Parameters.AddWithValue("@s", SKU);
             command.Parameters.AddWithValue("@cN", customerName);
             command.Parameters.AddWithValue("@pN", productName);
             command.Parameters.AddWithValue("@q", quantity);
@@ -98,6 +98,7 @@ namespace WallyWorld
             result = command.ExecuteNonQuery();
             connection.Close();
             command.Dispose();
+            return 0;
         }
 
         public string SearchCustomer(string s, int status)
@@ -106,7 +107,7 @@ namespace WallyWorld
             string sqlStatement;
             if (status == 0) // phone number
             {
-                sqlStatement = @"select concat(first_name , ' ' , last_name) as `name` from customer where telephone = @t;";
+                sqlStatement = @"select concat(first_name , ' ' , last_name,) as `name` from customer where telephone = @t;";
             }
             else //last name
             {
@@ -128,6 +129,24 @@ namespace WallyWorld
             connection.Close();
             command.Dispose();
             return result;
+        }
+
+        public void UpdateDatabaseQuantity(string id, int quantity)
+        {
+            string sqlStatement = @" update product set stock = stock - @q
+                                     where SKU = @id;";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+
+            command.Parameters.AddWithValue("@id", id);
+            
+            command.Parameters.AddWithValue("@q", quantity);
+
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
+            command.Dispose();
         }
     }
 }

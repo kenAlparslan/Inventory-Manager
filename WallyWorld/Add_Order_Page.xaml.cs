@@ -21,8 +21,13 @@ namespace WallyWorld
     /// </summary>
     public partial class Add_Order_Page : Page
     {
+        static int cartItem = 0;
         private int quant;
         private decimal pr;
+        private string productN;
+        private string sku;
+        private string customerN;
+        private string totalP;
         public Add_Order_Page()
         {
             InitializeComponent();
@@ -60,6 +65,8 @@ namespace WallyWorld
             decimal price = decimal.Parse(r["wPrice"].ToString(), System.Globalization.NumberStyles.Currency);
             List<string> branches = new List<string>();
             pr = price;
+            productN = name;
+            sku = id.ToString();
             for(int i=1; i<=totalStock; ++i)
             {
                 stockCB.Items.Add(i);
@@ -75,7 +82,7 @@ namespace WallyWorld
             NameTB.Text = name;
             CalculatedTotal.Text = "$"+(price * quant).ToString();
             Product_Border.Visibility = Visibility.Visible;
-            
+            totalP = CalculatedTotal.Text;
         }
 
         private void Search_CustomerBtn(object sender, RoutedEventArgs e)
@@ -95,14 +102,33 @@ namespace WallyWorld
             {
                 name = dbms.SearchCustomer(keyword, 1);
             }
-
+            if(name == "")
+            {
+                MessageBox.Show("No Customer found");
+            }
             CustomerSearchResult.Text = name;
-
+            customerN = name;
         }
 
         private void Add_To_Cart_Click(object sender, RoutedEventArgs e)
         {
-             
+            if (customerN == "" || customerN == null)
+            {
+                MessageBox.Show("Cannot add to the Cart without Customer Name");
+            }
+            else
+            {
+
+                DBMS dbms = new DBMS();
+                if (dbms.AddCart(sku, customerN, productN, quant, totalP) == 0)
+                {
+                    MessageBox.Show("Product added to Cart");
+                    cartItem++;
+                    Cart.Content = "Cart (" + cartItem + ")";
+                }
+                dbms.UpdateDatabaseQuantity(sku, quant);
+                Show_Products_Click(sender, e);
+            }
         }
 
         private void New_Customer_Click(object sender, RoutedEventArgs e)

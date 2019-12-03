@@ -23,7 +23,7 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label Content="New Order" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30"  />
-        <Button x:Name="Cart" Grid.Row="0" Grid.Column="2" Content="Cart " Width="60" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="30,5,5,5" Click="Add_To_Cart_Click"></Button>
+        <Button x:Name="Cart" Grid.Row="0" Grid.Column="2" Content="Cart " Width="60" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="30,5,5,5"></Button>
         <Button x:Name="Add_Customer" Content="New Customer" Grid.Row="0" Grid.Column="2" Width="100" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5,5,30,5" Click="New_Customer_Click"></Button>
         <DataGrid  CanUserAddRows="false" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="2" Grid.Row="2" x:Name="Products" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding}" VerticalAlignment="Top" RowHeight="25" ColumnHeaderHeight="25" Margin="0,10,0,0" ></DataGrid>
         <Button x:Name="Show_Products" Content="Available Products" Grid.Column="1" Grid.Row="1" Height="40" Width="120" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Show_Products_Click"></Button>
@@ -41,7 +41,7 @@
                 <ComboBox  x:Name="BranchCB" SelectedIndex="0" Margin="5,5,5,5" Width="120" HorizontalAlignment="Left" ></ComboBox>
                 <TextBlock x:Name="TotalTB" Text="Total Price" Foreground="Blue" Margin="5,0,5,5" FontSize="17"></TextBlock>
                 <TextBlock x:Name="CalculatedTotal" Text="" Margin="5,0,5,5" FontSize="15" ></TextBlock>
-                <Button x:Name="OrderBtn" Content="Add To Cart" Width="75"></Button>
+                <Button x:Name="OrderBtn" Content="Add To Cart" Width="75" Click="Add_To_Cart_Click"></Button>
             </StackPanel>
         </Border>
         
