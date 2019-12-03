@@ -24,22 +24,17 @@
         <Label Content="Sales Record" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" FontSize="30" Margin="10,0,0,0"  />
         <Label Content="**************************************" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="10,0,0,0"></Label>
         <Label Content="Thank You For Shopping At" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,0,0,0"></Label>
-        <Label x:Name="BranchName" Content="Test" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Margin="10,0,0,0"> </Label>
-        <Label x:Name="CustomerNameDate" Content="Test" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="10,0,0,0"></Label>
-        <Label x:Name="OrderID" Content="Test" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,10,0,0"></Label>
-        <StackPanel Grid.Row="3" Grid.RowSpan="3">
-            <Label Content="Test" Margin="10,0,0,0"></Label>
-            <Label Content="Test" Margin="10,0,0,0"></Label>
-            <Label Content="Test" Margin="10,0,0,0"></Label>
-            <Label Content="Test" Margin="10,0,0,0"></Label>
-            <Label Content="Test" Margin="10,0,0,0"></Label>
-            <Label Content="Test" Margin="10,0,0,0"></Label>
+        <Label x:Name="BranchName" Content="" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Margin="10,0,0,0"> </Label>
+        <Label x:Name="CustomerNameDate" Content="" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="10,0,0,0"></Label>
+        <Label x:Name="OrderID" Content="" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,10,0,0"></Label>
+        <StackPanel x:Name="Products" Grid.Row="3" Grid.RowSpan="3" Grid.ColumnSpan="3">
+            
 
         </StackPanel>
-        <Label x:Name="SubTotal" Content="Total" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,10,0,0"></Label>
-        <Label x:Name="Tax" Content="HST" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Margin="10,10,0,0"></Label>
-        <Label x:Name="SaleTotal" Content="SaleTotal" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="10,0,0,0"></Label>
-        <Label x:Name="Thanks" Content="Paid ThankYou" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,0,0,0"></Label>
+        <Label x:Name="SubTotal" Content="" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,10,0,0" FontWeight="Bold"></Label>
+        <Label x:Name="Tax" Content="" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Margin="10,10,0,0" FontWeight="Bold"></Label>
+        <Label x:Name="SaleTotal" Content="" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="10,0,0,0" FontWeight="Bold"></Label>
+        <TextBlock x:Name="Thanks" Text="Paid - ThankYou!" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,0,0,0" FontStyle="Italic" FontWeight="Bold" TextDecorations="Underline"></TextBlock>
 
 
     </Grid>

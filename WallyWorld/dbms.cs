@@ -451,6 +451,52 @@ namespace WallyWorld
             command.Dispose();
             return result;
         }
+        public string GetOrderDate(string orderID)
+        {
+            string result = "";
+            string sqlStatement = @" select orderDate from `order` where orderID = @oID;";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@oID", orderID);
+
+            connection.Open();
+            using (MySqlDataReader rdr = command.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    result = rdr["orderDate"].ToString();
+                }
+
+            }
+            connection.Close();
+            command.Dispose();
+            return result;
+        }
+
+        public string GetUnitPrice(string sku)
+        {
+            string result = "";
+            string sqlStatement = @" select wprice from product where name = @sku;";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@sku", sku);
+
+            connection.Open();
+            using (MySqlDataReader rdr = command.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    result = rdr["wprice"].ToString();
+                }
+
+            }
+            connection.Close();
+            command.Dispose();
+            return result;
+        }
+
 
     }
 }

@@ -135,15 +135,16 @@ namespace WallyWorld
             int retCode;
             if (sessionID.Count != 0)
             {
-
-                foreach (var key in ProNameQuant.Keys)
+                
+                string custID = dbms.GetCustomerID(customerName);
+                string bID = dbms.GetBranchID(branchName);
+                int retCode1 = dbms.AddOrder(custID, bID);
+                if (retCode1 == 1)
                 {
-                    string proID = dbms.GetProductID(key.ToString());
-                    string custID = dbms.GetCustomerID(customerName);
-                    string bID = dbms.GetBranchID(branchName);
-                    int retCode1 = dbms.AddOrder(custID, bID);
-                    if (retCode1 == 1)
+                    foreach (var key in ProNameQuant.Keys)
                     {
+                        string proID = dbms.GetProductID(key.ToString());
+
                         orderID = dbms.GetOrderID();
                         retCode = dbms.AddOrderLine(orderID, proID, quantity.ToString());
                         if (retCode != 1)
@@ -152,12 +153,12 @@ namespace WallyWorld
                             break;
                         }
                     }
-                    else
-                    {
-                        status = 1;
-                        break;
-                    }
                 }
+                else
+                {
+                    status = 1;   
+                }
+
                 if (status == 0)
                 {
                     foreach (var i in sessionID)
@@ -166,7 +167,7 @@ namespace WallyWorld
                     }
                     Show_Cart_Click(sender, e);
                     MessageBox.Show("Order Created Successfully");
-                    Window addCust = new Sales_Record();
+                    Window addCust = new Sales_Record(orderID, customerName, branchName, ProNameQuant);
                     addCust.Show();
                 }
                 else
