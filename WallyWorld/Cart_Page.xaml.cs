@@ -80,7 +80,7 @@ namespace WallyWorld
                 branchName = bName;
                 quantity = totalStock;
                 cost = price;
-                totalP.Text = "Total: $" + cost.ToString();
+                totalP.Text = "Total: $" + (cost + cost * (decimal)0.13).ToString();
                 totalP.Visibility = Visibility.Visible;
                 ProNameQuant.Add(pName, totalStock);
             }
@@ -107,7 +107,7 @@ namespace WallyWorld
                             }
                             cost += decimal.Parse(r["price"].ToString(), System.Globalization.NumberStyles.Currency);
                             quantity += int.Parse(r["quantity"].ToString());
-                            totalP.Text = "Total: $" + cost.ToString();
+                            totalP.Text = "Total: $" + (cost + cost * (decimal)0.13).ToString();
                         }
                         else
                         {
@@ -133,37 +133,56 @@ namespace WallyWorld
             string orderID = "";
             int status = 0;
             int retCode;
-            foreach (var key in ProNameQuant.Keys)
+            if (sessionID.Count != 0)
             {
-                string proID = dbms.GetProductID(key.ToString());
-                string custID = dbms.GetCustomerID(customerName);
-                string bID = dbms.GetBranchID(branchName);
-                int retCode1 = dbms.AddOrder(custID, bID);
-                if (retCode1 == 1)
+
+                foreach (var key in ProNameQuant.Keys)
                 {
-                    orderID = dbms.GetOrderID();
-                    retCode = dbms.AddOrderLine(orderID, proID, quantity.ToString());
-                    if(retCode != 1)
+                    string proID = dbms.GetProductID(key.ToString());
+                    string custID = dbms.GetCustomerID(customerName);
+                    string bID = dbms.GetBranchID(branchName);
+                    int retCode1 = dbms.AddOrder(custID, bID);
+                    if (retCode1 == 1)
+                    {
+                        orderID = dbms.GetOrderID();
+                        retCode = dbms.AddOrderLine(orderID, proID, quantity.ToString());
+                        if (retCode != 1)
+                        {
+                            status = 1;
+                            break;
+                        }
+                    }
+                    else
                     {
                         status = 1;
                         break;
                     }
                 }
+                if (status == 0)
+                {
+                    foreach (var i in sessionID)
+                    {
+                        dbms.RemoveFromCart(i);
+                    }
+                    Show_Cart_Click(sender, e);
+                    MessageBox.Show("Order Created Successfully");
+                }
                 else
                 {
-                    status = 1;
-                    break;
+                    MessageBox.Show("Error Occured, Please try again");
                 }
-            }
-            if(status == 0)
-            {
-                MessageBox.Show("Order Created Successfully");
+                customerName = "";
+                ProNameQuant.Clear();
+                quantity = 0;
+                branchName = "";
+                cost = 0; ;
+                sessionID.Clear();
             }
             else
             {
-                MessageBox.Show("Error Occured, Please try again");
+                MessageBox.Show("No product is selected");
             }
-        }
+    }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -173,7 +192,22 @@ namespace WallyWorld
 
         private void RemoveBtn_Click(object sender, RoutedEventArgs e)
         {
+            DBMS dbms = new DBMS();
+            if (sessionID.Count != 0)
+            {
 
+                foreach (var key in ProNameQuant.Keys)
+                {
+                    string proID = dbms.GetProductID(key.ToString());
+                    dbms.UpdateDatabaseQuantity(proID, ProNameQuant[key], 1);
+                }
+                foreach (var i in sessionID)
+                {
+                    dbms.RemoveFromCart(i);
+                }
+                Show_Cart_Click(sender, e);
+            }
+            MessageBox.Show("Product removed from the Cart");
         }
     }
 }

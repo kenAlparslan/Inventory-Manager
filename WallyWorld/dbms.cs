@@ -147,10 +147,20 @@ namespace WallyWorld
             return result;
         }
 
-        public void UpdateDatabaseQuantity(string id, int quantity)
+        public void UpdateDatabaseQuantity(string id, int quantity, int status)
         {
-            string sqlStatement = @" update product set stock = stock - @q
+            string sqlStatement = "";
+            if (status == 0)
+            {
+                sqlStatement = @" update product set stock = stock - @q
                                      where SKU = @id;";
+            }
+            else
+            {
+                sqlStatement = @" update product set stock = stock + @q
+                                     where SKU = @id;";
+            }
+            
 
             MySqlConnection connection = new MySqlConnection(connectionString);
             MySqlCommand command = new MySqlCommand(sqlStatement, connection);
@@ -314,6 +324,23 @@ namespace WallyWorld
 
             return result;
 
+        }
+
+        public int RemoveFromCart(string sessionID)
+        {
+            int result;
+
+            string sqlStatement = @" delete from cart where sessionID = @sID;";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@sID", sessionID);
+
+            connection.Open();
+            result = command.ExecuteNonQuery();
+            connection.Close();
+            command.Dispose();
+            return result;
         }
     }
 }

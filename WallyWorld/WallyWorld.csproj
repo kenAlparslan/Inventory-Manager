@@ -81,6 +81,12 @@
     <Compile Include="Create_Customer.xaml.cs">
       <DependentUpon>Create_Customer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Inventory_LookUp_Page.xaml.cs">
+      <DependentUpon>Inventory_LookUp_Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Order_LookUp_Page.xaml.cs">
+      <DependentUpon>Order_LookUp_Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Refund_Page.xaml.cs">
       <DependentUpon>Refund_Page.xaml</DependentUpon>
     </Compile>
@@ -97,6 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Create_Customer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Inventory_LookUp_Page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -120,6 +130,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Main_Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Order_LookUp_Page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

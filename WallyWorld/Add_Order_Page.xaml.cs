@@ -141,7 +141,7 @@ namespace WallyWorld
                     cartItem++;
                     Cart.Content = "Cart (" + cartItem + ")";
                 }
-                dbms.UpdateDatabaseQuantity(sku, quant);
+                dbms.UpdateDatabaseQuantity(sku, quant, 0);
                 Show_Products_Click(sender, e);
                 stockCB.Items.Clear();
                 stockCB.SelectedItem = "1";

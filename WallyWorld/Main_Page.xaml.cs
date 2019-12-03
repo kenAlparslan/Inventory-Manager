@@ -42,12 +42,12 @@ namespace WallyWorld
 
         private void Order_Lookup_Click(object sender, RoutedEventArgs e)
         {
-
+            this.NavigationService.Navigate(new Order_LookUp_Page());
         }
 
         private void Inventory_Lookup_Click(object sender, RoutedEventArgs e)
         {
-
+            this.NavigationService.Navigate(new Inventory_LookUp_Page());
         }
     }
 }
