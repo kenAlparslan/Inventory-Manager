@@ -9,6 +9,23 @@
       Title="Refund_Page">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Content="Refund" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30"  />
+        <DataGrid  CanUserAddRows="false" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" Grid.Row="2" x:Name="Orders" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding}" VerticalAlignment="Top" RowHeight="25" ColumnHeaderHeight="25" Margin="10,10,10,10" ></DataGrid>
+        <Button x:Name="Show_Cart" Content="Show Orders" Grid.Column="1" Grid.Row="1" Height="40" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Show_Orders_Click"></Button>
+        <TextBlock x:Name="totalP" Text="Total: " Visibility="Hidden" FontSize="25" Foreground="Blue" Margin="15,5,5,5" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
+
     </Grid>
 </Page>

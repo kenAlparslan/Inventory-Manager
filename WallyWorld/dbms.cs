@@ -95,6 +95,36 @@ namespace WallyWorld
             return dt;
         }
 
+        public DataTable DisplayOrders()
+        {
+
+            string sqlStatement = @"select * from `order`";
+            DataTable dt = new DataTable();
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+
+            using (MySqlDataAdapter da = new MySqlDataAdapter(sqlStatement, connection))
+                da.Fill(dt);
+
+            connection.Close();
+            return dt;
+        }
+
+        public DataTable DisplayInventory()
+        {
+
+            string sqlStatement = @"select name, stock from product";
+            DataTable dt = new DataTable();
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+
+            using (MySqlDataAdapter da = new MySqlDataAdapter(sqlStatement, connection))
+                da.Fill(dt);
+
+            connection.Close();
+            return dt;
+        }
+
         public int AddCart(string SKU, string customerName, string productName, string branchName, int quantity, string price)
         {
             int result;
@@ -342,5 +372,85 @@ namespace WallyWorld
             command.Dispose();
             return result;
         }
+
+        public int RefundOrder(int orderID)
+        {
+            int result;
+            string sqlStatement = @" update `order` set `status` = 'RFND'
+                                     where orderID = @oID;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@oID", orderID);
+
+            connection.Open();
+            result = command.ExecuteNonQuery();
+            connection.Close();
+            command.Dispose();
+            return result;
+
+        }
+
+        public int RefundOrderLine(int orderID)
+        {
+            int result;
+            string sqlStatement = @" update orderline set quantity = 0
+                                     where orderID = @oID;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@oID", orderID);
+
+            connection.Open();
+            result = command.ExecuteNonQuery();
+            connection.Close();
+            command.Dispose();
+            return result;
+        }
+
+        public string ReturnQuantity(int orderID)
+        {
+            string result = "";
+            string sqlStatement = @" select quantity from orderline where orderID = @oID;";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@oID", orderID);
+
+            connection.Open();
+            using (MySqlDataReader rdr = command.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    result = rdr["quantity"].ToString();
+                }
+
+            }
+            connection.Close();
+            command.Dispose();
+            return result;
+        }
+
+        public string ReturnSKUFromOL(int orderID)
+        {
+            string result = "";
+            string sqlStatement = @" select sku from orderline where orderID = @oID;";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@oID", orderID);
+
+            connection.Open();
+            using (MySqlDataReader rdr = command.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    result = rdr["sku"].ToString();
+                }
+
+            }
+            connection.Close();
+            command.Dispose();
+            return result;
+        }
+
     }
 }

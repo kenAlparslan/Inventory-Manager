@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,15 @@ namespace WallyWorld
         public Order_LookUp_Page()
         {
             InitializeComponent();
+        }
+
+        private void Show_Order_Click(object sender, RoutedEventArgs e)
+        {
+            DBMS dbms = new DBMS();
+            DataTable dt = new DataTable();
+
+            dt = dbms.DisplayOrders();
+            Orders.ItemsSource = dt.DefaultView;
         }
     }
 }
