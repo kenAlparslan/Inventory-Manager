@@ -164,5 +164,156 @@ namespace WallyWorld
             connection.Close();
             command.Dispose();
         }
+
+        public int AddOrder(string customerID, string branchID)
+        {
+            int result;
+            string status = "PAID";
+            DateTime tmp = DateTime.Today;
+            string orderDate = tmp.ToString("D");
+
+            string sqlStatement = @" insert into `Order` (orderDate, `status`, CustomerID , branchID)
+                                     values (@oD, @s, @cID, @bID);";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@oD", orderDate);
+            command.Parameters.AddWithValue("@s", status);
+            command.Parameters.AddWithValue("@cID", customerID);
+            command.Parameters.AddWithValue("@bID", branchID);
+
+            connection.Open();
+            result = command.ExecuteNonQuery();
+            connection.Close();
+            command.Dispose();
+            
+            return result;
+        }
+
+        public int AddOrderLine(string orderID, string SKU, string quantity)
+        {
+            int result;
+            string sqlStatement = @" insert into OrderLine (orderID, SKU, quantity)
+                                     values (@oID, @sku, @qu);";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@oID", orderID);
+            command.Parameters.AddWithValue("@sku", SKU);
+            command.Parameters.AddWithValue("@qu", quantity);
+            
+
+            connection.Open();
+            result = command.ExecuteNonQuery();
+            connection.Close();
+            command.Dispose();
+            return result;
+        }
+
+        public string GetCustomerID(string customerName)
+        {
+            string result = "";
+            int space;
+            string firstName="", lastName="";
+            space = customerName.IndexOf(" ");
+            firstName = customerName.Substring(0, space);
+            lastName = customerName.Substring(space + 1);
+
+            string sqlStatement = @"Select customerID from customer where first_Name = @fN and  last_name = @lN;";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@fN", firstName);
+            command.Parameters.AddWithValue("@lN", lastName);
+           
+
+            connection.Open();
+            using (MySqlDataReader rdr = command.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    result = rdr["customerID"].ToString();
+                }
+
+            }
+            connection.Close();
+            command.Dispose();
+
+            return result;
+        }
+
+        public string GetBranchID(string branchName)
+        {
+            string result = "";
+            string sqlStatement = @"Select branchID from branch where branchName = @bN;";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@bN", branchName);
+
+            connection.Open();
+            using (MySqlDataReader rdr = command.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    result = rdr["branchID"].ToString();
+                }
+
+            }
+            connection.Close();
+            command.Dispose();
+
+            return result;
+            
+        }
+
+        public string GetProductID(string productName)
+        {
+            string result = "";
+            string sqlStatement = @"Select sku from product where Name = @pN;";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@pN", productName);
+
+            connection.Open();
+            using (MySqlDataReader rdr = command.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    result = rdr["sku"].ToString();
+                }
+
+            }
+            connection.Close();
+            command.Dispose();
+
+            return result;
+
+        }
+
+        public string GetOrderID()
+        {
+            string result = "";
+            string sqlStatement = @"SELECT LAST_INSERT_ID();";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+
+            connection.Open();
+            using (MySqlDataReader rdr = command.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    result = rdr["LAST_INSERT_ID()"].ToString();
+                }
+
+            }
+            connection.Close();
+            command.Dispose();
+
+            return result;
+
+        }
     }
 }

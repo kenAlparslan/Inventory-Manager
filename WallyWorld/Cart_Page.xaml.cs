@@ -22,17 +22,20 @@ namespace WallyWorld
     public partial class Cart_Page : Page
     {
         private string customerName;
-        private List<string> ProductName;
+        //private List<string> ProductName;
+        private Dictionary<string, int> ProNameQuant;
         private int quantity;
         private string branchName;
         private decimal cost;
         private List<string> sessionID;
+        
 
         public Cart_Page()
         {
             InitializeComponent();
-            ProductName = new List<string>();
+            //ProductName = new List<string>();
             sessionID = new List<string>();
+            ProNameQuant = new Dictionary<string, int>();
         }
 
         private void Show_Cart_Click(object sender, RoutedEventArgs e)
@@ -73,13 +76,13 @@ namespace WallyWorld
 
                 sessionID.Add(r["sessionID"].ToString());
                 customerName = cName;
-                ProductName.Add(pName);
+                //ProductName.Add(pName);
                 branchName = bName;
                 quantity = totalStock;
                 cost = price;
                 totalP.Text = "Total: $" + cost.ToString();
                 totalP.Visibility = Visibility.Visible;
-
+                ProNameQuant.Add(pName, totalStock);
             }
             else
             {
@@ -89,11 +92,27 @@ namespace WallyWorld
 
                     if (customerName == r["customerName"].ToString())
                     {
-                        sessionID.Add(r["sessionID"].ToString());
-                        ProductName.Add(r["productName"].ToString());
-                        cost += decimal.Parse(r["price"].ToString(), System.Globalization.NumberStyles.Currency);
-                        quantity += int.Parse(r["quantity"].ToString());
-                        totalP.Text = "Total: $" + cost.ToString();
+
+                        if (branchName == r["branchName"].ToString())
+                        {
+                            sessionID.Add(r["sessionID"].ToString());
+                            //ProductName.Add(r["productName"].ToString());
+                            if (ProNameQuant.ContainsKey(r["productName"].ToString()))
+                            {
+                                ProNameQuant[r["productName"].ToString()] += int.Parse(r["quantity"].ToString());
+                            }
+                            else
+                            {
+                                ProNameQuant.Add(r["productName"].ToString(), int.Parse(r["quantity"].ToString()));
+                            }
+                            cost += decimal.Parse(r["price"].ToString(), System.Globalization.NumberStyles.Currency);
+                            quantity += int.Parse(r["quantity"].ToString());
+                            totalP.Text = "Total: $" + cost.ToString();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Different Branch");
+                        }
                     }
                     else
                     {
@@ -110,7 +129,40 @@ namespace WallyWorld
 
         private void OrderBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            DBMS dbms = new DBMS();
+            string orderID = "";
+            int status = 0;
+            int retCode;
+            foreach (var key in ProNameQuant.Keys)
+            {
+                string proID = dbms.GetProductID(key.ToString());
+                string custID = dbms.GetCustomerID(customerName);
+                string bID = dbms.GetBranchID(branchName);
+                int retCode1 = dbms.AddOrder(custID, bID);
+                if (retCode1 == 1)
+                {
+                    orderID = dbms.GetOrderID();
+                    retCode = dbms.AddOrderLine(orderID, proID, quantity.ToString());
+                    if(retCode != 1)
+                    {
+                        status = 1;
+                        break;
+                    }
+                }
+                else
+                {
+                    status = 1;
+                    break;
+                }
+            }
+            if(status == 0)
+            {
+                MessageBox.Show("Order Created Successfully");
+            }
+            else
+            {
+                MessageBox.Show("Error Occured, Please try again");
+            }
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
