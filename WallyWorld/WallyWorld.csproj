@@ -90,6 +90,9 @@
     <Compile Include="Refund_Page.xaml.cs">
       <DependentUpon>Refund_Page.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Sales_Record.xaml.cs">
+      <DependentUpon>Sales_Record.xaml</DependentUpon>
+    </Compile>
     <Page Include="Add_Customer_Page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,6 +141,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Refund_Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sales_Record.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

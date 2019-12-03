@@ -166,6 +166,8 @@ namespace WallyWorld
                     }
                     Show_Cart_Click(sender, e);
                     MessageBox.Show("Order Created Successfully");
+                    Window addCust = new Sales_Record();
+                    addCust.Show();
                 }
                 else
                 {
