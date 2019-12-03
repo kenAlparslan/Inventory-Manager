@@ -148,5 +148,10 @@ namespace WallyWorld
             CalculatedTotal.Text = "$" + (pr * quant).ToString();
             totalP = CalculatedTotal.Text;
         }
+
+        private void View_Cart_Btn(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Cart_Page());
+        }
     }
 }

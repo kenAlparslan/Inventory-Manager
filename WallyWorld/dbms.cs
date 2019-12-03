@@ -80,6 +80,21 @@ namespace WallyWorld
 
         }
 
+        public DataTable DisplayCart()
+        {
+
+            string sqlStatement = @"select * from cart";
+            DataTable dt = new DataTable();
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+
+            using (MySqlDataAdapter da = new MySqlDataAdapter(sqlStatement, connection))
+                da.Fill(dt);
+
+            connection.Close();
+            return dt;
+        }
+
         public int AddCart(string SKU, string customerName, string productName, string branchName, int quantity, string price)
         {
             int result;
@@ -108,7 +123,7 @@ namespace WallyWorld
             string sqlStatement;
             if (status == 0) // phone number
             {
-                sqlStatement = @"select concat(first_name , ' ' , last_name,) as `name` from customer where telephone = @t;";
+                sqlStatement = @"select concat(first_name , ' ' , last_name) as `name` from customer where telephone = @t;";
             }
             else //last name
             {
