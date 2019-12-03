@@ -78,9 +78,31 @@ namespace WallyWorld
             
         }
 
+        private void Search_CustomerBtn(object sender, RoutedEventArgs e)
+        {
+            string keyword = CustNameTB.Text.Trim();
+            string name = "";
+            bool isDigitPresent = keyword.Any(c => char.IsDigit(c));
+            DBMS dbms = new DBMS();
+            if(isDigitPresent == true) // telephone number
+            {
+                if(keyword.Length == 12)
+                {
+                    name = dbms.SearchCustomer(keyword, 0);
+                }
+            }
+            else // lastName
+            {
+                name = dbms.SearchCustomer(keyword, 1);
+            }
+
+            CustomerSearchResult.Text = name;
+
+        }
+
         private void Add_To_Cart_Click(object sender, RoutedEventArgs e)
         {
-
+             
         }
 
         private void New_Customer_Click(object sender, RoutedEventArgs e)

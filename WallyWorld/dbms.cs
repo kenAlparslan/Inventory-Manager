@@ -79,5 +79,55 @@ namespace WallyWorld
             return result;
 
         }
+
+        public void AddCart(string customerName, string productName, int quantity, string price)
+        {
+            int result;
+            string sqlStatement = @" insert into Cart (CustomerName , ProductName , quantity, price)
+                                     values (@cN, @pN, @q, @p);";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+
+            command.Parameters.AddWithValue("@cN", customerName);
+            command.Parameters.AddWithValue("@pN", productName);
+            command.Parameters.AddWithValue("@q", quantity);
+            command.Parameters.AddWithValue("@p", price);
+
+            connection.Open();
+            result = command.ExecuteNonQuery();
+            connection.Close();
+            command.Dispose();
+        }
+
+        public string SearchCustomer(string s, int status)
+        {
+            string result = "";
+            string sqlStatement;
+            if (status == 0) // phone number
+            {
+                sqlStatement = @"select concat(first_name , ' ' , last_name) as `name` from customer where telephone = @t;";
+            }
+            else //last name
+            {
+                sqlStatement = @"select concat(first_name , ' ' , last_name) as `name` from customer where last_name = @t;";
+            }
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@t", s);
+            connection.Open();
+            using (MySqlDataReader rdr = command.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    result = rdr["name"].ToString();
+                }
+
+            }
+            connection.Close();
+            command.Dispose();
+            return result;
+        }
     }
 }
