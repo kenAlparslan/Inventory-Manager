@@ -78,6 +78,10 @@ namespace WallyWorld
                 }
                 
             }
+            else
+            {
+                errorMsg.Visibility = Visibility.Visible;
+            }
             
         }
 

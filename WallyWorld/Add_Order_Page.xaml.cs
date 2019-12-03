@@ -59,6 +59,7 @@ namespace WallyWorld
         }
         private void SelectBtn_Click(object sender, RoutedEventArgs e)
         {
+            stockCB.Items.Clear();
             DataRowView r = (DataRowView)((Button)e.Source).DataContext;
             int id = int.Parse(r["SKU"].ToString());
             string name = r["name"].ToString();
@@ -73,13 +74,20 @@ namespace WallyWorld
                 stockCB.Items.Add(i);
             }
 
-            DBMS dbms = new DBMS();
-            branches = dbms.GetBranches();
-            for(int i=0; i<branches.Count; ++i)
+            if (BranchCB.Items.Count <  3 )
             {
-                BranchCB.Items.Add(branches.ElementAt(i));
-            }
 
+                DBMS dbms = new DBMS();
+                branches = dbms.GetBranches();
+                for (int i = 0; i < branches.Count; ++i)
+                {
+                    BranchCB.Items.Add(branches.ElementAt(i));
+                }
+            }
+            if(stockCB.Items.Count != 0)
+            {
+                stockCB.SelectedItem = 1;
+            }
             NameTB.Text = name;
             CalculatedTotal.Text = "$"+(price * quant).ToString();
             Product_Border.Visibility = Visibility.Visible;
@@ -119,6 +127,10 @@ namespace WallyWorld
             {
                 MessageBox.Show("Cannot add to the Cart without Customer Name");
             }
+            else if(stockCB.SelectedItem == null)
+            {
+                MessageBox.Show("Item is out of stock");
+            }
             else
             {
 
@@ -131,7 +143,11 @@ namespace WallyWorld
                 }
                 dbms.UpdateDatabaseQuantity(sku, quant);
                 Show_Products_Click(sender, e);
+                stockCB.Items.Clear();
+                stockCB.SelectedItem = "1";
+                CalculatedTotal.Text = "";
             }
+            
         }
 
         private void New_Customer_Click(object sender, RoutedEventArgs e)
@@ -144,9 +160,13 @@ namespace WallyWorld
 
         private void ComboBox_Selection_Changed(object sender, SelectionChangedEventArgs e)
         {
-            quant = int.Parse(stockCB.SelectedItem.ToString());
-            CalculatedTotal.Text = "$" + (pr * quant).ToString();
-            totalP = CalculatedTotal.Text;
+            if(stockCB.SelectedItem != null)
+            {
+                quant = int.Parse(stockCB.SelectedItem.ToString());
+                CalculatedTotal.Text = "$" + (pr * quant).ToString();
+                totalP = CalculatedTotal.Text;
+            }
+            
         }
 
         private void View_Cart_Btn(object sender, RoutedEventArgs e)

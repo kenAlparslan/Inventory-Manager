@@ -34,10 +34,10 @@ namespace WallyWorld
             if (Cart.Columns.Count == 7 || Cart.Columns.Count == 0)
             {
                 DataGridTemplateColumn col1 = new DataGridTemplateColumn();
-                col1.Header = "Select";
+                col1.Header = "Checkout";
 
                 FrameworkElementFactory factory1 = new FrameworkElementFactory(typeof(Button));
-                factory1.SetValue(Button.ContentProperty, "Select");
+                factory1.SetValue(Button.ContentProperty, "Checkout");
                 factory1.AddHandler(Button.ClickEvent, new RoutedEventHandler(SelectBtn_Click));
                 DataTemplate cellTemplate1 = new DataTemplate();
                 cellTemplate1.VisualTree = factory1;
