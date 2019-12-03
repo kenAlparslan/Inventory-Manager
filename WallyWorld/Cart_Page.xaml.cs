@@ -208,9 +208,14 @@ namespace WallyWorld
                 {
                     dbms.RemoveFromCart(i);
                 }
+                this.NavigationService.Navigate(new Cart_Page());
                 Show_Cart_Click(sender, e);
             }
             MessageBox.Show("Product removed from the Cart");
+        }
+        private void Back_To_Main_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Main_Page());
         }
     }
 }

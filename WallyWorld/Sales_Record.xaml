@@ -27,7 +27,7 @@
         <Label x:Name="BranchName" Content="" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Margin="10,0,0,0"> </Label>
         <Label x:Name="CustomerNameDate" Content="" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="10,0,0,0"></Label>
         <Label x:Name="OrderID" Content="" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,10,0,0"></Label>
-        <StackPanel x:Name="Products" Grid.Row="3" Grid.RowSpan="3" Grid.ColumnSpan="3">
+        <StackPanel x:Name="Products" Grid.Row="3" Grid.RowSpan="3" Grid.ColumnSpan="3" Margin="5,0,0,0">
             
 
         </StackPanel>

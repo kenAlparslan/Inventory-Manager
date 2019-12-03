@@ -34,5 +34,9 @@ namespace WallyWorld
             dt = dbms.DisplayOrders();
             Orders.ItemsSource = dt.DefaultView;
         }
+        private void Back_To_Main_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Main_Page());
+        }
     }
 }

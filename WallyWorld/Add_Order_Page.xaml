@@ -43,7 +43,9 @@
                 <TextBlock x:Name="CalculatedTotal" Text="" Margin="5,0,5,5" FontSize="15" ></TextBlock>
                 <Button x:Name="OrderBtn" Content="Add To Cart" Width="75" Click="Add_To_Cart_Click"></Button>
             </StackPanel>
+
         </Border>
-        
+                        <Button Content="Main Page" Grid.Row="1" Grid.Column="3" Height="30" Width="70" VerticalAlignment="Top" Margin="0,10,0,0" Click="Back_To_Main_Click" ></Button>
+
     </Grid>
 </Page>

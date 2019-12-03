@@ -169,6 +169,11 @@ namespace WallyWorld
             
         }
 
+        private void Back_To_Main_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Main_Page());
+        }
+
         private void View_Cart_Btn(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Cart_Page());

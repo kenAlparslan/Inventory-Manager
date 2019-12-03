@@ -29,5 +29,7 @@
         <Button x:Name="order" Content="Order" Grid.Row="5" Grid.Column="1" Width="75" Height="30" HorizontalAlignment="Left" Margin="30,0,0,0" Click="OrderBtn_Click"></Button>
         <Button x:Name="remove" Content="Remove" Grid.Row="5" Grid.Column="1" Width="75" Height="30" HorizontalAlignment="right" Margin="0,0,30,0" Click="RemoveBtn_Click"></Button>
         <Button x:Name="cancel" Content="Cancel" Grid.Row="5" Grid.Column="2" Width="75" Height="30" HorizontalAlignment="Left" Margin="30,0,0,0" Click="CancelBtn_Click"></Button>
+        <Button Content="Main Page" Grid.Row="0" Grid.Column="2" Height="30" Width="70" VerticalAlignment="Bottom" Click="Back_To_Main_Click" ></Button>
+
     </Grid>
 </Page>

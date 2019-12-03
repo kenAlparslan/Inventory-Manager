@@ -69,6 +69,7 @@ namespace WallyWorld
                     {
                         MessageBox.Show("Order Refunded Successfully");
                         this.NavigationService.Navigate(new Refund_Page());
+                        Show_Orders_Click(sender, e);
                     }
                 }
             }
@@ -77,6 +78,10 @@ namespace WallyWorld
                 MessageBox.Show("This Order have been Refunded");
             }
             
+        }
+        private void Back_To_Main_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Main_Page());
         }
     }
 }

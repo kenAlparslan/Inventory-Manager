@@ -120,7 +120,10 @@ namespace WallyWorld
             this.NavigationService.Navigate(new Add_Customer_Page());
         }
 
-      
+        private void Back_To_Main_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Main_Page());
+        }
     }
  
 }
