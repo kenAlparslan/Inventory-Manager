@@ -80,17 +80,18 @@ namespace WallyWorld
 
         }
 
-        public int AddCart(string SKU, string customerName, string productName, int quantity, string price)
+        public int AddCart(string SKU, string customerName, string productName, string branchName, int quantity, string price)
         {
             int result;
-            string sqlStatement = @" insert into Cart (SKU, CustomerName , ProductName , quantity, price)
-                                     values (@s, @cN, @pN, @q, @p);";
+            string sqlStatement = @" insert into Cart (SKU, CustomerName , ProductName , branchName,  quantity, price)
+                                     values (@s, @cN, @pN, @b, @q, @p);";
 
             MySqlConnection connection = new MySqlConnection(connectionString);
             MySqlCommand command = new MySqlCommand(sqlStatement, connection);
             command.Parameters.AddWithValue("@s", SKU);
             command.Parameters.AddWithValue("@cN", customerName);
             command.Parameters.AddWithValue("@pN", productName);
+            command.Parameters.AddWithValue("@b", branchName);
             command.Parameters.AddWithValue("@q", quantity);
             command.Parameters.AddWithValue("@p", price);
 

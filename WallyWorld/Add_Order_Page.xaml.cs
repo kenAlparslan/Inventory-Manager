@@ -28,6 +28,7 @@ namespace WallyWorld
         private string sku;
         private string customerN;
         private string totalP;
+        private string branchN;
         public Add_Order_Page()
         {
             InitializeComponent();
@@ -112,6 +113,8 @@ namespace WallyWorld
 
         private void Add_To_Cart_Click(object sender, RoutedEventArgs e)
         {
+            branchN = BranchCB.SelectedItem.ToString();
+
             if (customerN == "" || customerN == null)
             {
                 MessageBox.Show("Cannot add to the Cart without Customer Name");
@@ -120,7 +123,7 @@ namespace WallyWorld
             {
 
                 DBMS dbms = new DBMS();
-                if (dbms.AddCart(sku, customerN, productN, quant, totalP) == 0)
+                if (dbms.AddCart(sku, customerN, productN, branchN, quant, totalP) == 0)
                 {
                     MessageBox.Show("Product added to Cart");
                     cartItem++;
@@ -143,6 +146,7 @@ namespace WallyWorld
         {
             quant = int.Parse(stockCB.SelectedItem.ToString());
             CalculatedTotal.Text = "$" + (pr * quant).ToString();
+            totalP = CalculatedTotal.Text;
         }
     }
 }
