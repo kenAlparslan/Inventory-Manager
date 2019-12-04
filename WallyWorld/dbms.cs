@@ -221,17 +221,15 @@ namespace WallyWorld
         public int AddOrder(string customerID, string branchID)
         {
             int result;
-            string status = "PAID";
             DateTime tmp = DateTime.Today;
             string orderDate = tmp.ToString("D");
 
-            string sqlStatement = @" insert into `Order` (orderDate, `status`, CustomerID , branchID)
-                                     values (@oD, @s, @cID, @bID);";
+            string sqlStatement = @" insert into `Order` (orderDate, CustomerID , branchID)
+                                     values (@oD, @cID, @bID);";
 
             MySqlConnection connection = new MySqlConnection(connectionString);
             MySqlCommand command = new MySqlCommand(sqlStatement, connection);
             command.Parameters.AddWithValue("@oD", orderDate);
-            command.Parameters.AddWithValue("@s", status);
             command.Parameters.AddWithValue("@cID", customerID);
             command.Parameters.AddWithValue("@bID", branchID);
 
@@ -243,18 +241,43 @@ namespace WallyWorld
             return result;
         }
 
+        public int AddOrderWithDate(string customerID, string branchID, string orderDate)
+        {
+            int result;
+            
+
+            string sqlStatement = @" insert into `Order` (orderDate, CustomerID , branchID)
+                                     values (@oD, @cID, @bID);";
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@oD", orderDate);
+            
+            command.Parameters.AddWithValue("@cID", customerID);
+            command.Parameters.AddWithValue("@bID", branchID);
+
+            connection.Open();
+            result = command.ExecuteNonQuery();
+            connection.Close();
+            command.Dispose();
+
+            return result;
+        }
+
         public int AddOrderLine(string orderID, string SKU, string quantity)
         {
             int result;
-            string sqlStatement = @" insert into OrderLine (orderID, SKU, quantity)
-                                     values (@oID, @sku, @qu);";
+            string status = "PAID";
+            string sqlStatement = @" insert into OrderLine (orderID, SKU, quantity, `status`)
+                                     values (@oID, @sku, @qu, @s);";
 
             MySqlConnection connection = new MySqlConnection(connectionString);
             MySqlCommand command = new MySqlCommand(sqlStatement, connection);
             command.Parameters.AddWithValue("@oID", orderID);
             command.Parameters.AddWithValue("@sku", SKU);
             command.Parameters.AddWithValue("@qu", quantity);
-            
+            command.Parameters.AddWithValue("@s", status);
+
 
             connection.Open();
             result = command.ExecuteNonQuery();
@@ -386,33 +409,34 @@ namespace WallyWorld
             return result;
         }
 
-        public int RefundOrder(int orderID)
+        //public int RefundOrder(int orderID)
+        //{
+        //    int result;
+        //    string sqlStatement = @" update order set `status` = 'RFND'
+        //                                where orderID - oID;";
+        //    MySqlConnection connection = new MySqlConnection(connectionString);
+        //    MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+        //    command.Parameters.AddWithValue("@oID", orderID);
+            
+
+        //    connection.Open();
+        //    result = command.ExecuteNonQuery();
+        //    connection.Close();
+        //    command.Dispose();
+        //    return result;
+
+        //}
+
+        public int RefundOrderLine(int orderID, int quantity, string sku)
         {
             int result;
-            string sqlStatement = @" update `order` set `status` = 'RFND'
-                                     where orderID = @oID;";
-            MySqlConnection connection = new MySqlConnection(connectionString);
-            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
-            command.Parameters.AddWithValue("@oID", orderID);
-
-            connection.Open();
-            result = command.ExecuteNonQuery();
-            connection.Close();
-            command.Dispose();
-            return result;
-
-        }
-
-        public int RefundOrderLine(int orderID, int quantity)
-        {
-            int result;
-            string sqlStatement = @" update orderline set quantity = quantity - @q
-                                     where orderID = @oID;";
+            string sqlStatement = @" update orderline set quantity = @q, `status` = 'RFND'
+                                        where orderID = @oID and sku = @sku;";
             MySqlConnection connection = new MySqlConnection(connectionString);
             MySqlCommand command = new MySqlCommand(sqlStatement, connection);
             command.Parameters.AddWithValue("@q", quantity);
             command.Parameters.AddWithValue("@oID", orderID);
-
+            command.Parameters.AddWithValue("@sku", sku);
             connection.Open();
             result = command.ExecuteNonQuery();
             connection.Close();

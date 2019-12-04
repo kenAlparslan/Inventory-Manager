@@ -30,6 +30,7 @@ namespace WallyWorld
         string customerName;
         private Dictionary<string, int> ProNameQuant;
         private string productName;
+        private string orderDate;
 
         public Refund_Page(string branchName)
         {
@@ -72,6 +73,7 @@ namespace WallyWorld
                 status = r["status"].ToString();
                 customerName = r["Customer_Name"].ToString();
                 productName = r["name"].ToString();
+                orderDate = r["orderDate"].ToString();
 
                 for (int i = 1; i <= totalQuantity; ++i)
                 {
@@ -88,24 +90,37 @@ namespace WallyWorld
 
         private void RefundBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+            string customerID;
             DBMS dbms = new DBMS();
             ProNameQuant.Clear();
-           
+
             if (status == "PAID")
             {
+                customerID = dbms.GetCustomerID(customerName);
                 ProNameQuant.Add(productName, quantitySelected);
-                if (dbms.RefundOrder(orderID) == 1)
+
+
+                dbms.UpdateDatabaseQuantity(sku, quantitySelected, 1);
+                if (dbms.RefundOrderLine(orderID, quantitySelected, sku) >= 1)
                 {
-                    //quant = dbms.ReturnQuantity(id);
-                    dbms.UpdateDatabaseQuantity(sku, quantitySelected, 1);
-                    if (dbms.RefundOrderLine(orderID, quantitySelected) >= 1)
+                    MessageBox.Show("Order Refunded Successfully");
+                    this.NavigationService.Navigate(new Refund_Page(branch));
+                    Show_Orders_Click(sender, e);
+                    Window addCust = new Sales_Record(orderID.ToString(), customerName, branch, ProNameQuant, 0);
+                    addCust.Show();
+                }
+
+
+                if (totalQuantity != quantitySelected)
+                {
+
+                    string branchID = dbms.GetBranchID(branch);
+
+                    if (dbms.AddOrderWithDate(customerID, branchID, orderDate) == 1)
                     {
-                        MessageBox.Show("Order Refunded Successfully");
-                        this.NavigationService.Navigate(new Refund_Page(branch));
-                        Show_Orders_Click(sender, e);
-                        Window addCust = new Sales_Record(orderID.ToString(), customerName, branch, ProNameQuant, 0);
-                        addCust.Show();
+                        string newOrderID = dbms.GetOrderID();
+
+                        dbms.AddOrderLine(newOrderID, sku, (totalQuantity - quantitySelected).ToString());
                     }
                 }
             }
@@ -113,7 +128,7 @@ namespace WallyWorld
             {
                 MessageBox.Show("This Order have been Refunded");
             }
-            
+
         }
         private void Back_To_Main_Click(object sender, RoutedEventArgs e)
         {
@@ -122,11 +137,11 @@ namespace WallyWorld
 
         private void Quantity_Selection_Changed(object sender, SelectionChangedEventArgs e)
         {
-            if(QuantityForRefund.SelectedItem.ToString() != "0" || QuantityForRefund.SelectedItem != null)
+            if (QuantityForRefund.SelectedItem.ToString() != "0" || QuantityForRefund.SelectedItem != null)
             {
                 quantitySelected = int.Parse(QuantityForRefund.SelectedItem.ToString());
             }
-            
+
         }
     }
 }

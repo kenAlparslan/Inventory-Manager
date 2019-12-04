@@ -25,6 +25,7 @@ namespace WallyWorld
         //private List<string> ProductName;
         private Dictionary<string, int> ProNameQuant;
         private int quantity;
+        private int totalQuantity;
         private string branchName;
         private decimal cost;
         private List<string> sessionID;
@@ -97,12 +98,13 @@ namespace WallyWorld
                 sessionID.Add(r["sessionID"].ToString());
                 customerName = cName;
                 //ProductName.Add(pName);
-                branchName = bName;
+                //branchName = bName;
                 quantity = totalStock;
                 cost = price;
                 totalP.Text = "Total: $" + (cost + cost * (decimal)0.13).ToString();
                 totalP.Visibility = Visibility.Visible;
                 ProNameQuant.Add(pName, totalStock);
+                
             }
             else
             {
@@ -176,7 +178,7 @@ namespace WallyWorld
                         string proID = dbms.GetProductID(key.ToString());
 
                         orderID = dbms.GetOrderID();
-                        retCode = dbms.AddOrderLine(orderID, proID, quantity.ToString());
+                        retCode = dbms.AddOrderLine(orderID, proID, ProNameQuant[key].ToString());
                         if (retCode != 1)
                         {
                             status = 1;
@@ -208,7 +210,7 @@ namespace WallyWorld
                 customerName = "";
                 ProNameQuant.Clear();
                 quantity = 0;
-                branchName = "";
+                //branchName = "";
                 cost = 0; ;
                 sessionID.Clear();
             }

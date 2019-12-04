@@ -27,7 +27,7 @@ namespace WallyWorld
     /// </summary>
     public partial class Add_Order_Page : Page
     {
-        static int cartItem = 0;
+        int cartItem;
         private int quant;
         private decimal pr;
         private string productN;
@@ -40,6 +40,7 @@ namespace WallyWorld
             InitializeComponent();
             branchN = branchName;
             GetBranch.Text = branchN;
+            cartItem = 0;
         }
 
         private void Show_Products_Click(object sender, RoutedEventArgs e)
