@@ -37,7 +37,16 @@ namespace WallyWorld
             sessionID = new List<string>();
             ProNameQuant = new Dictionary<string, int>();
         }
-
+        /*
+         *  Function    : Show_Cart_Click
+         *  Description : Display the Cart Data Grid
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void Show_Cart_Click(object sender, RoutedEventArgs e)
         {
             DBMS dbms = new DBMS();
@@ -60,7 +69,16 @@ namespace WallyWorld
             dt = dbms.DisplayCart();
             Cart.ItemsSource = dt.DefaultView;
         }
-
+        /*
+         *  Function    : CheckoutBtn_Click
+         *  Description : Display the Cart Data Grid
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void CheckoutBtn_Click(object sender, RoutedEventArgs e)
         {
             DataRowView r;
@@ -127,6 +145,16 @@ namespace WallyWorld
 
         }
 
+        /*
+         *  Function    : OrderBtn_Click
+         *  Description : Display the Cart Data Grid
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void OrderBtn_Click(object sender, RoutedEventArgs e)
         {
             DBMS dbms = new DBMS();
@@ -169,6 +197,7 @@ namespace WallyWorld
                     MessageBox.Show("Order Created Successfully");
                     Window addCust = new Sales_Record(orderID, customerName, branchName, ProNameQuant);
                     addCust.Show();
+                    totalP.Text = "";
                 }
                 else
                 {
@@ -185,14 +214,34 @@ namespace WallyWorld
             {
                 MessageBox.Show("No product is selected");
             }
-    }
+        }
 
+        /*
+         *  Function    : CancelBtn_Click
+         *  Description : Cancels the order
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Cart_Page());
             Show_Cart_Click(sender, e);
         }
 
+        /*
+         *  Function    : RemoveBtn_Click
+         *  Description : Removes the Order from the cart
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void RemoveBtn_Click(object sender, RoutedEventArgs e)
         {
             DBMS dbms = new DBMS();
@@ -210,9 +259,24 @@ namespace WallyWorld
                 }
                 this.NavigationService.Navigate(new Cart_Page());
                 Show_Cart_Click(sender, e);
+                MessageBox.Show("Product removed from the Cart");
             }
-            MessageBox.Show("Product removed from the Cart");
+            else
+            {
+                MessageBox.Show("No Product is selected");
+            }
+            
         }
+        /*
+         *  Function    : Back_To_Main_Click
+         *  Description : This function is used to navigate to the main page
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void Back_To_Main_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Main_Page());

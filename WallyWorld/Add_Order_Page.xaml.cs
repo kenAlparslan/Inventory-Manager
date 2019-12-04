@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * Author: Ken Alparslan
+ * Date: 03-12-2019
+ * Description: This page has the logic for adding a new order to the database
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -119,6 +125,16 @@ namespace WallyWorld
             customerN = name;
         }
 
+        /*
+         *  Function    : Add_To_Cart_Click
+         *  Description : This function adds ptoducts to cart
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void Add_To_Cart_Click(object sender, RoutedEventArgs e)
         {
             branchN = BranchCB.SelectedItem.ToString();
@@ -150,6 +166,16 @@ namespace WallyWorld
             
         }
 
+        /*
+         *  Function    : New_Customer_Click
+         *  Description : This function adds new customer from the sales page
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void New_Customer_Click(object sender, RoutedEventArgs e)
         {
             Window addCust = new Create_Customer();
@@ -158,6 +184,16 @@ namespace WallyWorld
             
         }
 
+        /*
+         *  Function    : ComboBox_Selection_Changed
+         *  Description : This function updates the calculated total cost
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void ComboBox_Selection_Changed(object sender, SelectionChangedEventArgs e)
         {
             if(stockCB.SelectedItem != null)
@@ -169,6 +205,16 @@ namespace WallyWorld
             
         }
 
+        /*
+         *  Function    : Back_To_Main_Click
+         *  Description : This function is used to navigate to the main page
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void Back_To_Main_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Main_Page());

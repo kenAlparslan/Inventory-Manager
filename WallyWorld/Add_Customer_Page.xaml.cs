@@ -1,4 +1,10 @@
-﻿using MySql.Data.MySqlClient;
+﻿/*
+ * Author: Ken Alparslan
+ * Date: 03-12-2019
+ * Description: This page has the logic for adding a new customer into the database
+ */
+
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +31,16 @@ namespace WallyWorld
         {
             InitializeComponent();
         }
-
+        /*
+         *  Function    : Add_Customer_Click
+         *  Description : Inserts the new Customer into the database
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         public void Add_Customer_Click(object sender, RoutedEventArgs e)
         {
             string firstName = firstN.Text;
@@ -84,7 +99,16 @@ namespace WallyWorld
             }
             
         }
-
+        /*
+         *  Function    : ValidateString
+         *  Description : This function validates the string entered into the program
+         *      
+         *
+         *  Parameters  : string string1
+         *      
+         *  Returns     : bool
+         *      
+         */
         public static bool ValidateString(string string1)
         {
             List<string> invalidChars = new List<string>() { "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-" };
@@ -115,11 +139,31 @@ namespace WallyWorld
                 return true;
             }
         }
+        /*
+         *  Function    : Refresh_Click
+         *  Description : This function refreshes the form and clears the fileds
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Add_Customer_Page());
         }
 
+        /*
+         *  Function    : Back_To_Main_Click
+         *  Description : This function is used to navigate to the main page
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void Back_To_Main_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Main_Page());
