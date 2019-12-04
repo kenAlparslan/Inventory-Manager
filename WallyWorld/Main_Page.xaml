@@ -21,12 +21,15 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        
+        <Label Content="" x:Name="DisplayBranch" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" FontSize="15" Margin="5,0,0,0" ></Label>
         <Label Content="Welcome to Wally's World" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="40"  />
         <Button Content="Create New Customer" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" Click="New_Customer_Click"/>
         <Button Content="Create New Order" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" Click="New_Order_Click"/>
         <Button Content="Refund" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" Click="Refund_Click"/>
         <Button Content="Order Lookup" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" Click="Order_Lookup_Click"/>
         <Button Content="Inventory Lookup" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" Click="Inventory_Lookup_Click"/>
+        <Button Content="Select Branch" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" Click="Select_Branch_Click"/>
 
     </Grid>
 </Page>

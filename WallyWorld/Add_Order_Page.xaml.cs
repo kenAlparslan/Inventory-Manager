@@ -35,9 +35,11 @@ namespace WallyWorld
         private string customerN;
         private string totalP;
         private string branchN;
-        public Add_Order_Page()
+        public Add_Order_Page(string branchName)
         {
             InitializeComponent();
+            branchN = branchName;
+            GetBranch.Text = branchN;
         }
 
         private void Show_Products_Click(object sender, RoutedEventArgs e)
@@ -71,7 +73,7 @@ namespace WallyWorld
             string name = r["name"].ToString();
             int totalStock = int.Parse(r["stock"].ToString());
             decimal price = decimal.Parse(r["wPrice"].ToString(), System.Globalization.NumberStyles.Currency);
-            List<string> branches = new List<string>();
+            
             pr = price;
             productN = name;
             sku = id.ToString();
@@ -80,16 +82,7 @@ namespace WallyWorld
                 stockCB.Items.Add(i);
             }
 
-            if (BranchCB.Items.Count <  3 )
-            {
-
-                DBMS dbms = new DBMS();
-                branches = dbms.GetBranches();
-                for (int i = 0; i < branches.Count; ++i)
-                {
-                    BranchCB.Items.Add(branches.ElementAt(i));
-                }
-            }
+            
             if(stockCB.Items.Count != 0)
             {
                 stockCB.SelectedItem = 1;
@@ -137,7 +130,7 @@ namespace WallyWorld
          */
         private void Add_To_Cart_Click(object sender, RoutedEventArgs e)
         {
-            branchN = BranchCB.SelectedItem.ToString();
+            
 
             if (customerN == "" || customerN == null)
             {
@@ -217,12 +210,12 @@ namespace WallyWorld
          */
         private void Back_To_Main_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Main_Page());
+            this.NavigationService.Navigate(new Main_Page(branchN));
         }
 
         private void View_Cart_Btn(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Cart_Page());
+            this.NavigationService.Navigate(new Cart_Page(branchN));
         }
     }
 }

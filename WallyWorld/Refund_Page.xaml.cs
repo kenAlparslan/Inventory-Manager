@@ -21,9 +21,12 @@ namespace WallyWorld
     /// </summary>
     public partial class Refund_Page : Page
     {
-        public Refund_Page()
+        private string branch;
+        public Refund_Page(string branchName)
         {
             InitializeComponent();
+            branch = branchName;
+            DisplayBranch.Content = "Branch: " + branchName;
         }
 
         private void Show_Orders_Click(object sender, RoutedEventArgs e)
@@ -68,7 +71,7 @@ namespace WallyWorld
                     if (dbms.RefundOrderLine(id) == 1)
                     {
                         MessageBox.Show("Order Refunded Successfully");
-                        this.NavigationService.Navigate(new Refund_Page());
+                        this.NavigationService.Navigate(new Refund_Page(branch));
                         Show_Orders_Click(sender, e);
                     }
                 }
@@ -81,7 +84,7 @@ namespace WallyWorld
         }
         private void Back_To_Main_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Main_Page());
+            this.NavigationService.Navigate(new Main_Page(branch));
         }
     }
 }

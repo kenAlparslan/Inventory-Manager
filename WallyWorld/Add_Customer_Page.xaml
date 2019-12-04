@@ -22,6 +22,8 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Label Content="" x:Name="DisplayBranch" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" FontSize="15" Margin="5,5,0,0" ></Label>
+
         <Label Content="New Customer" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30"  />
         <Label Content="First Name:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"  />
         <Label Content="Last Name:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"  />

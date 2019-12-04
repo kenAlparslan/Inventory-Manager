@@ -21,9 +21,12 @@ namespace WallyWorld
     /// </summary>
     public partial class Inventory_LookUp_Page : Page
     {
-        public Inventory_LookUp_Page()
+        private string branch;
+        public Inventory_LookUp_Page(string branchName)
         {
             InitializeComponent();
+            branch = branchName;
+            DisplayBranch.Content = "Branch: " + branchName;
         }
 
         private void Show_Inventory_Click(object sender, RoutedEventArgs e)
@@ -36,7 +39,7 @@ namespace WallyWorld
         }
         private void Back_To_Main_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Main_Page());
+            this.NavigationService.Navigate(new Main_Page(branch));
         }
     }
 }

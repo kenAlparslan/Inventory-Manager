@@ -30,12 +30,14 @@ namespace WallyWorld
         private List<string> sessionID;
         
 
-        public Cart_Page()
+        public Cart_Page(string bName)
         {
             InitializeComponent();
             //ProductName = new List<string>();
             sessionID = new List<string>();
             ProNameQuant = new Dictionary<string, int>();
+            branchName = bName;
+            DisplayBranch.Content = "Branch: " + branchName;
         }
         /*
          *  Function    : Show_Cart_Click
@@ -228,7 +230,7 @@ namespace WallyWorld
          */
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Cart_Page());
+            this.NavigationService.Navigate(new Cart_Page(branchName));
             Show_Cart_Click(sender, e);
         }
 
@@ -257,7 +259,7 @@ namespace WallyWorld
                 {
                     dbms.RemoveFromCart(i);
                 }
-                this.NavigationService.Navigate(new Cart_Page());
+                this.NavigationService.Navigate(new Cart_Page(branchName));
                 Show_Cart_Click(sender, e);
                 MessageBox.Show("Product removed from the Cart");
             }
@@ -279,7 +281,7 @@ namespace WallyWorld
          */
         private void Back_To_Main_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Main_Page());
+            this.NavigationService.Navigate(new Main_Page(branchName));
         }
     }
 }

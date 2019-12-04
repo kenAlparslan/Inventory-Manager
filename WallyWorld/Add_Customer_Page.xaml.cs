@@ -27,9 +27,12 @@ namespace WallyWorld
     /// </summary>
     public partial class Add_Customer_Page : Page
     {
-        public Add_Customer_Page()
+        private string branch;
+        public Add_Customer_Page(string branchName)
         {
             InitializeComponent();
+            branch = branchName;
+            DisplayBranch.Content = "Branch: " + branchName;
         }
         /*
          *  Function    : Add_Customer_Click
@@ -151,7 +154,7 @@ namespace WallyWorld
          */
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Add_Customer_Page());
+            this.NavigationService.Navigate(new Add_Customer_Page(branch));
         }
 
         /*
@@ -166,7 +169,7 @@ namespace WallyWorld
          */
         private void Back_To_Main_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Main_Page());
+            this.NavigationService.Navigate(new Main_Page(branch));
         }
     }
  

@@ -20,34 +20,42 @@ namespace WallyWorld
     /// </summary>
     public partial class Main_Page : Page
     {
-        public Main_Page()
+        private string branch;
+        public Main_Page(string branchName)
         {
             InitializeComponent();
+            branch = branchName;
+            DisplayBranch.Content = "Branch: " + branchName;
         }
 
         private void New_Customer_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Add_Customer_Page());
+            this.NavigationService.Navigate(new Add_Customer_Page(branch));
         }
 
         private void New_Order_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Add_Order_Page());
+            this.NavigationService.Navigate(new Add_Order_Page(branch));
         }
 
         private void Refund_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Refund_Page());
+            this.NavigationService.Navigate(new Refund_Page(branch));
         }
 
         private void Order_Lookup_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Order_LookUp_Page());
+            this.NavigationService.Navigate(new Order_LookUp_Page(branch));
         }
 
         private void Inventory_Lookup_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Inventory_LookUp_Page());
+            this.NavigationService.Navigate(new Inventory_LookUp_Page(branch));
+        }
+
+        private void Select_Branch_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Branch_Page());
         }
     }
 }

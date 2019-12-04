@@ -23,7 +23,7 @@ namespace WallyWorld
         public MainWindow()
         {
             InitializeComponent();
-            Main.NavigationService.Navigate(new Main_Page());
+            Main.NavigationService.Navigate(new Branch_Page());
         }
 
     }
