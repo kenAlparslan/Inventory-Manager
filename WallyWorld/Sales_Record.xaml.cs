@@ -20,24 +20,33 @@ namespace WallyWorld
     public partial class Sales_Record : Window
     {
        
-        public Sales_Record(string orderid, string custName, string branchName, Dictionary<string, int> ProductInfo)
+        public Sales_Record(string orderid, string custName, string branchName, Dictionary<string, int> ProductInfo, int saleOrRefund)
         {
             InitializeComponent();
-            InitializeForm(orderid, custName, branchName, ProductInfo);
+            InitializeForm(orderid, custName, branchName, ProductInfo, saleOrRefund);
             
         }
 
-        public void InitializeForm(string orderid, string custName, string branchName, Dictionary<string, int> ProductInfo)
+        public void InitializeForm(string orderid, string custName, string branchName, Dictionary<string, int> ProductInfo, int saleRefund)
         {
             BranchName.Content = "Wally's World " + branchName;
             DBMS dbms = new DBMS();
             string date = dbms.GetOrderDate(orderid);
             CustomerNameDate.Content = date + ", " + custName + "!";
-            OrderID.Content = "Order ID: "+orderid;
+            if(saleRefund == 1)
+            {
+                OrderID.Content = "Order ID: " + orderid+ ",  Status: PAID";
+            }
+            else
+            {
+                OrderID.Content = "Order ID: " + orderid + ",  Status: REFUND";
+            }
+          
             string unitPrice = "";
             decimal totalProductCost;
             decimal salesTotal = 0;
             decimal tax;
+            int status = saleRefund;
             foreach(var key in ProductInfo.Keys)
             {
                 unitPrice = dbms.GetUnitPrice(key);
@@ -51,6 +60,14 @@ namespace WallyWorld
             SubTotal.Content = "Subtotal = $" + salesTotal.ToString();
             Tax.Content = "HST (13%) = $" + tax;
             SaleTotal.Content = "Sale Total = $" + (tax + salesTotal).ToString();
+            if(status == 1)
+            {
+                Thanks.Text = "Paid - Thank You!";
+            }
+            else
+            {
+                Thanks.Text = "Refund - Thank You!";
+            }
         }
         
     }

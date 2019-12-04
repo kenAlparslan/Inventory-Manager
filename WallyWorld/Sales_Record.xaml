@@ -34,7 +34,7 @@
         <Label x:Name="SubTotal" Content="" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,10,0,0" FontWeight="Bold"></Label>
         <Label x:Name="Tax" Content="" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Margin="10,10,0,0" FontWeight="Bold"></Label>
         <Label x:Name="SaleTotal" Content="" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="10,0,0,0" FontWeight="Bold"></Label>
-        <TextBlock x:Name="Thanks" Text="Paid - ThankYou!" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,0,0,0" FontStyle="Italic" FontWeight="Bold" TextDecorations="Underline"></TextBlock>
+        <TextBlock x:Name="Thanks" Text="" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10,0,0,0" FontStyle="Italic" FontWeight="Bold" TextDecorations="Underline"></TextBlock>
 
 
     </Grid>

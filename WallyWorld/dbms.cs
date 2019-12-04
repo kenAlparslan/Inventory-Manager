@@ -97,16 +97,29 @@ namespace WallyWorld
 
         public DataTable DisplayOrders()
         {
+            string mySqlView = @"   drop view if exists OrderDetails;
+                                    create view OrderDetails
+                                    as
+                                    select orderLine.orderID ,orderDate, `status`, concat(first_name, ' ', last_name) as Customer_Name, branchName , orderline.sku, name, quantity from orderline
+                                    inner join `order` on orderLine.orderID = `order`.orderID
+                                    inner join branch on `order`.branchID = branch.branchID
+                                    inner join customer on `order`.customerID = customer.customerID
+                                    inner join product on orderLine.sku = product.sku
+                                    Order by orderLine.orderID;";
 
-            string sqlStatement = @"select * from `order`";
+            string sqlStatement = @"select * from orderDetails";
+
             DataTable dt = new DataTable();
             MySqlConnection connection = new MySqlConnection(connectionString);
             connection.Open();
+            MySqlCommand command = new MySqlCommand(mySqlView, connection);
+            command.ExecuteNonQuery();
 
             using (MySqlDataAdapter da = new MySqlDataAdapter(sqlStatement, connection))
                 da.Fill(dt);
 
             connection.Close();
+            command.Dispose();
             return dt;
         }
 
@@ -390,13 +403,14 @@ namespace WallyWorld
 
         }
 
-        public int RefundOrderLine(int orderID)
+        public int RefundOrderLine(int orderID, int quantity)
         {
             int result;
-            string sqlStatement = @" update orderline set quantity = 0
+            string sqlStatement = @" update orderline set quantity = quantity - @q
                                      where orderID = @oID;";
             MySqlConnection connection = new MySqlConnection(connectionString);
             MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@q", quantity);
             command.Parameters.AddWithValue("@oID", orderID);
 
             connection.Open();
