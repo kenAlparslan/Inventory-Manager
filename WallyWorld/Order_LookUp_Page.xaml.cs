@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * Author: Ken Alparslan
+ * Date: 03-12-2019
+ * Description: This page has the logic needed for displaying the Orders
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -29,6 +35,16 @@ namespace WallyWorld
             DisplayBranch.Content = "Branch: " + branchName;
         }
 
+        /*
+         *  Function    : Show_Order_Click
+         *  Description : This function is used to display orders
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void Show_Order_Click(object sender, RoutedEventArgs e)
         {
             DBMS dbms = new DBMS();
@@ -37,6 +53,17 @@ namespace WallyWorld
             dt = dbms.DisplayOrders();
             Orders.ItemsSource = dt.DefaultView;
         }
+
+        /*
+         *  Function    : Back_To_Main_Click
+         *  Description : This function is used to navigate to the main page
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void Back_To_Main_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Main_Page(branch));

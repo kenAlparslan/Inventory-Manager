@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * Author: Ken Alparslan
+ * Date: 03-12-2019
+ * Description: This page has the logic for selecting a branch
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,6 +57,16 @@ namespace WallyWorld
             
         }
 
+        /*
+         *  Function    : FillBranches
+         *  Description : This function is gets the branches from the database and fills the combobox
+         *      
+         *
+         *  Parameters  : void
+         *      
+         *  Returns     : void
+         *      
+         */
         private void FillBranches()
         {
             List<string> branches = new List<string>();

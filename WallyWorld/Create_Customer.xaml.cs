@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * Author: Ken Alparslan
+ * Date: 03-12-2019
+ * Description: This page has the logic for creating a new customer
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +30,16 @@ namespace WallyWorld
             InitializeComponent();
         }
 
+        /*
+         *  Function    : Add_Cust_Click
+         *  Description : This function adds a new customer from the sales page
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void Add_Cust_Click(object sender, RoutedEventArgs e)
         {
             string firstName = firstN.Text;

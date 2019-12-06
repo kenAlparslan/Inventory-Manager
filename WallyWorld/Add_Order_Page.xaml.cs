@@ -42,7 +42,16 @@ namespace WallyWorld
             GetBranch.Text = branchN;
             cartItem = 0;
         }
-
+        /*
+          *  Function    : Show_Products_Click
+          *  Description : This function shows the products in a datagrid
+          *      
+          *
+          *  Parameters  : object sender, RoutedEventArgs e
+          *      
+          *  Returns     : void
+          *      
+          */
         private void Show_Products_Click(object sender, RoutedEventArgs e)
         {
             DBMS dbms = new DBMS();
@@ -66,6 +75,17 @@ namespace WallyWorld
             Products.ItemsSource = dt.DefaultView;
 
         }
+
+        /*
+          *  Function    : SelectBtn_Click
+          *  Description : This function selects an item from the grid and displays it to the user to get quantity
+          *      
+          *
+          *  Parameters  : object sender, RoutedEventArgs e
+          *      
+          *  Returns     : void
+          *      
+          */
         private void SelectBtn_Click(object sender, RoutedEventArgs e)
         {
             stockCB.Items.Clear();
@@ -93,7 +113,16 @@ namespace WallyWorld
             Product_Border.Visibility = Visibility.Visible;
             totalP = CalculatedTotal.Text;
         }
-
+        /*
+          *  Function    : Search_CustomerBtn
+          *  Description : This function searches customer for the order
+          *      
+          *
+          *  Parameters  : object sender, RoutedEventArgs e
+          *      
+          *  Returns     : void
+          *      
+          */
         private void Search_CustomerBtn(object sender, RoutedEventArgs e)
         {
             string keyword = CustNameTB.Text.Trim();
@@ -213,7 +242,16 @@ namespace WallyWorld
         {
             this.NavigationService.Navigate(new Main_Page(branchN));
         }
-
+        /*
+         *  Function    : View_Cart_Btn
+         *  Description : This function is used to navigate to the page that has the cart
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         private void View_Cart_Btn(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Cart_Page(branchN));

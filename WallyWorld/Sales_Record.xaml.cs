@@ -1,4 +1,11 @@
-﻿using System;
+﻿
+/*
+ * Author: Ken Alparslan
+ * Date: 03-12-2019
+ * Description: This page has the logic needed for creating a Sales Record
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +34,16 @@ namespace WallyWorld
             
         }
 
+        /*
+         *  Function    : InitializeForm
+         *  Description : This function is used to initialize the form with appropriate values related to the Order/Refund
+         *      
+         *
+         *  Parameters  : object sender, RoutedEventArgs e
+         *      
+         *  Returns     : void
+         *      
+         */
         public void InitializeForm(string orderid, string custName, string branchName, Dictionary<string, int> ProductInfo, int saleRefund)
         {
             BranchName.Content = "Wally's World " + branchName;

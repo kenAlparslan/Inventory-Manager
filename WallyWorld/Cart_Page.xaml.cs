@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * Author: Ken Alparslan
+ * Date: 03-12-2019
+ * Description: This page has the logic need for the performing operations on the Cart
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;

@@ -1,4 +1,10 @@
-﻿using MySql.Data.MySqlClient;
+﻿/*
+ * Author: Ken Alparslan
+ * Date: 03-12-2019
+ * Description: This page has the logic needed for communicating with the database
+ */
+
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,7 +21,16 @@ namespace WallyWorld
     {
         private string connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
-
+        /*
+         *  Function    : CreateCustomer
+         *  Description : This function adds a new customer
+         *      
+         *
+         *  Parameters  : string firstName, string lastName, string phoneNumber
+         *      
+         *  Returns     : int
+         *      
+         */
         public int CreateCustomer(string firstName, string lastName, string phoneNumber)
         {
             int result;
@@ -40,6 +55,16 @@ namespace WallyWorld
             return result;
         }
 
+        /*
+         *  Function    : DisplayProducts
+         *  Description : This function returns the product table from the database
+         *      
+         *
+         *  Parameters  : void
+         *      
+         *  Returns     : DataTable
+         *      
+         */
         public DataTable DisplayProducts()
         {
 
@@ -55,6 +80,16 @@ namespace WallyWorld
             return dt;
         }
 
+        /*
+         *  Function    : GetBranches
+         *  Description : This function returns the branch table from the database
+         *      
+         *
+         *  Parameters  : void
+         *      
+         *  Returns     : List<string> : list of branches
+         *      
+         */
         public List<string> GetBranches()
         {
             string sqlStatement = @"select branchName from branch;";
@@ -80,6 +115,16 @@ namespace WallyWorld
 
         }
 
+        /*
+         *  Function    : DisplayCart
+         *  Description : This function returns the items from the cart table
+         *      
+         *
+         *  Parameters  : void
+         *      
+         *  Returns     : DataTable
+         *      
+         */
         public DataTable DisplayCart()
         {
 
@@ -95,6 +140,16 @@ namespace WallyWorld
             return dt;
         }
 
+        /*
+         *  Function    : DisplayOrders
+         *  Description : This function creates a view from joining multiple tables together and returns the items from the view
+         *      
+         *
+         *  Parameters  : void
+         *      
+         *  Returns     : DataTable
+         *      
+         */
         public DataTable DisplayOrders()
         {
             string mySqlView = @"   drop view if exists OrderDetails;
@@ -123,6 +178,16 @@ namespace WallyWorld
             return dt;
         }
 
+        /*
+         *  Function    : DisplayInventory
+         *  Description : This function gets the product name and available stock from the products table
+         *      
+         *
+         *  Parameters  : void
+         *      
+         *  Returns     : DataTable
+         *      
+         */
         public DataTable DisplayInventory()
         {
 
@@ -138,6 +203,16 @@ namespace WallyWorld
             return dt;
         }
 
+        /*
+         *  Function    : AddCart
+         *  Description : This function creates a new item in the cart
+         *      
+         *
+         *  Parameters  : string SKU, string customerName, string productName, string branchName, int quantity, string price
+         *      
+         *  Returns     : int
+         *      
+         */
         public int AddCart(string SKU, string customerName, string productName, string branchName, int quantity, string price)
         {
             int result;
@@ -160,6 +235,16 @@ namespace WallyWorld
             return 0;
         }
 
+        /*
+         *  Function    : SearchCustomer
+         *  Description : This function searches for a customer in the database
+         *      
+         *
+         *  Parameters  : string s, int status
+         *      
+         *  Returns     : string
+         *      
+         */
         public string SearchCustomer(string s, int status)
         {
             string result = "";
@@ -190,6 +275,16 @@ namespace WallyWorld
             return result;
         }
 
+        /*
+         *  Function    : UpdateDatabaseQuantity
+         *  Description : This function updates the available stock based on the ordered amount
+         *      
+         *
+         *  Parameters  : string id, int quantity, int status
+         *      
+         *  Returns     : void
+         *      
+         */
         public void UpdateDatabaseQuantity(string id, int quantity, int status)
         {
             string sqlStatement = "";
@@ -218,6 +313,16 @@ namespace WallyWorld
             command.Dispose();
         }
 
+        /*
+         *  Function    : AddOrder
+         *  Description : This function creates a new order item
+         *      
+         *
+         *  Parameters  : string customerID, string branchID
+         *      
+         *  Returns     : int
+         *      
+         */
         public int AddOrder(string customerID, string branchID)
         {
             int result;
@@ -241,6 +346,16 @@ namespace WallyWorld
             return result;
         }
 
+        /*
+         *  Function    : AddOrderWithDate
+         *  Description : This function creates a new order item with a certain date
+         *      
+         *
+         *  Parameters  : string customerID, string branchID, string orderDate
+         *      
+         *  Returns     : int
+         *      
+         */
         public int AddOrderWithDate(string customerID, string branchID, string orderDate)
         {
             int result;
@@ -264,6 +379,16 @@ namespace WallyWorld
             return result;
         }
 
+        /*
+         *  Function    : AddOrderLine
+         *  Description : This function creates a new orderLine item
+         *      
+         *
+         *  Parameters  : string orderID, string SKU, string quantity
+         *      
+         *  Returns     : int
+         *      
+         */
         public int AddOrderLine(string orderID, string SKU, string quantity)
         {
             int result;
@@ -286,6 +411,16 @@ namespace WallyWorld
             return result;
         }
 
+        /*
+         *  Function    : GetCustomerID
+         *  Description : This function returns customers ID
+         *      
+         *
+         *  Parameters  : string customerName
+         *      
+         *  Returns     : string
+         *      
+         */
         public string GetCustomerID(string customerName)
         {
             string result = "";
@@ -318,6 +453,16 @@ namespace WallyWorld
             return result;
         }
 
+        /*
+         *  Function    : GetBranchID
+         *  Description : This function returns branch ID
+         *      
+         *
+         *  Parameters  : string branchName
+         *      
+         *  Returns     : string
+         *      
+         */
         public string GetBranchID(string branchName)
         {
             string result = "";
@@ -343,6 +488,16 @@ namespace WallyWorld
             
         }
 
+        /*
+         *  Function    : GetProductID
+         *  Description : This function returns product ID
+         *      
+         *
+         *  Parameters  : string productName
+         *      
+         *  Returns     : string
+         *      
+         */
         public string GetProductID(string productName)
         {
             string result = "";
@@ -368,6 +523,16 @@ namespace WallyWorld
 
         }
 
+        /*
+         *  Function    : GetOrderID
+         *  Description : This function returns the last inserted order ID
+         *      
+         *
+         *  Parameters  : void
+         *      
+         *  Returns     : string
+         *      
+         */
         public string GetOrderID()
         {
             string result = "";
@@ -392,6 +557,16 @@ namespace WallyWorld
 
         }
 
+        /*
+         *  Function    : RemoveFromCart
+         *  Description : This function removes and order from the cart
+         *      
+         *
+         *  Parameters  : string sessionID
+         *      
+         *  Returns     : int
+         *      
+         */
         public int RemoveFromCart(string sessionID)
         {
             int result;
@@ -409,24 +584,17 @@ namespace WallyWorld
             return result;
         }
 
-        //public int RefundOrder(int orderID)
-        //{
-        //    int result;
-        //    string sqlStatement = @" update order set `status` = 'RFND'
-        //                                where orderID - oID;";
-        //    MySqlConnection connection = new MySqlConnection(connectionString);
-        //    MySqlCommand command = new MySqlCommand(sqlStatement, connection);
-        //    command.Parameters.AddWithValue("@oID", orderID);
-            
 
-        //    connection.Open();
-        //    result = command.ExecuteNonQuery();
-        //    connection.Close();
-        //    command.Dispose();
-        //    return result;
-
-        //}
-
+        /*
+         *  Function    : RefundOrderLine
+         *  Description : This function refunds an orderLine
+         *      
+         *
+         *  Parameters  : int orderID, int quantity, string sku
+         *      
+         *  Returns     : int
+         *      
+         */
         public int RefundOrderLine(int orderID, int quantity, string sku)
         {
             int result;
@@ -444,6 +612,16 @@ namespace WallyWorld
             return result;
         }
 
+        /*
+         *  Function    : ReturnQuantity
+         *  Description : This function returns quantity
+         *      
+         *
+         *  Parameters  : int orderID
+         *      
+         *  Returns     : string
+         *      
+         */
         public string ReturnQuantity(int orderID)
         {
             string result = "";
@@ -467,6 +645,16 @@ namespace WallyWorld
             return result;
         }
 
+        /*
+         *  Function    : ReturnSKUFromOL
+         *  Description : This function returns sku from the orderLine
+         *      
+         *
+         *  Parameters  : int orderID
+         *      
+         *  Returns     : string
+         *      
+         */
         public string ReturnSKUFromOL(int orderID)
         {
             string result = "";
@@ -489,6 +677,16 @@ namespace WallyWorld
             command.Dispose();
             return result;
         }
+        /*
+         *  Function    : GetOrderDate
+         *  Description : This function returns orderDate
+         *      
+         *
+         *  Parameters  : string orderID
+         *      
+         *  Returns     : string
+         *      
+         */
         public string GetOrderDate(string orderID)
         {
             string result = "";
@@ -512,6 +710,16 @@ namespace WallyWorld
             return result;
         }
 
+        /*
+         *  Function    : GetUnitPrice
+         *  Description : This function returns unitPrice
+         *      
+         *
+         *  Parameters  : string sku
+         *      
+         *  Returns     : string
+         *      
+         */
         public string GetUnitPrice(string sku)
         {
             string result = "";
