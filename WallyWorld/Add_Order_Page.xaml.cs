@@ -71,7 +71,7 @@ namespace WallyWorld
                 Products.Columns.Add(col1);
             }
             
-            dt = dbms.DisplayProducts();
+            dt = dbms.DisplayProducts(branchN);
             Products.ItemsSource = dt.DefaultView;
 
         }
@@ -180,7 +180,7 @@ namespace WallyWorld
                     cartItem++;
                     Cart.Content = "Cart (" + cartItem + ")";
                 }
-                dbms.UpdateDatabaseQuantity(sku, quant, 0);
+                dbms.UpdateDatabaseQuantity(sku, quant, 0, branchN);
                 Show_Products_Click(sender, e);
                 stockCB.Items.Clear();
                 stockCB.SelectedItem = "1";

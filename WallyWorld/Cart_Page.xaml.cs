@@ -90,67 +90,76 @@ namespace WallyWorld
          */
         private void CheckoutBtn_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView r;
-            if (totalP.IsVisible == false)
+            DataRowView r = (DataRowView)((Button)e.Source).DataContext; ;
+            if (branchName == r["branchName"].ToString())
             {
-                r = (DataRowView)((Button)e.Source).DataContext;
-                int id = int.Parse(r["SKU"].ToString());
-                string cName = r["customerName"].ToString();
-                string pName = r["productName"].ToString();
-                string bName = r["branchName"].ToString();
-                int totalStock = int.Parse(r["quantity"].ToString());
-                decimal price = decimal.Parse(r["price"].ToString(), System.Globalization.NumberStyles.Currency);
 
-                sessionID.Add(r["sessionID"].ToString());
-                customerName = cName;
-                //ProductName.Add(pName);
-                //branchName = bName;
-                quantity = totalStock;
-                cost = price;
-                totalP.Text = "Total: $" + (cost + cost * (decimal)0.13).ToString();
-                totalP.Visibility = Visibility.Visible;
-                ProNameQuant.Add(pName, totalStock);
-                
-            }
-            else
-            {
-                r = (DataRowView)((Button)e.Source).DataContext;
-                if (sessionID.Contains(r["sessionID"].ToString()) == false)
+
+                if (totalP.IsVisible == false)
                 {
+                    //r = (DataRowView)((Button)e.Source).DataContext;
+                    int id = int.Parse(r["SKU"].ToString());
+                    string cName = r["customerName"].ToString();
+                    string pName = r["productName"].ToString();
+                    //string bName = r["branchName"].ToString();
+                    int totalStock = int.Parse(r["quantity"].ToString());
+                    decimal price = decimal.Parse(r["price"].ToString(), System.Globalization.NumberStyles.Currency);
 
-                    if (customerName == r["customerName"].ToString())
+                    sessionID.Add(r["sessionID"].ToString());
+                    customerName = cName;
+                    //ProductName.Add(pName);
+                    //branchName = bName;
+                    quantity = totalStock;
+                    cost = price;
+                    totalP.Text = "Total: $" + (cost + cost * (decimal)0.13).ToString();
+                    totalP.Visibility = Visibility.Visible;
+                    ProNameQuant.Add(pName, totalStock);
+
+                }
+                else
+                {
+                    r = (DataRowView)((Button)e.Source).DataContext;
+                    if (sessionID.Contains(r["sessionID"].ToString()) == false)
                     {
 
-                        if (branchName == r["branchName"].ToString())
+                        if (customerName == r["customerName"].ToString())
                         {
-                            sessionID.Add(r["sessionID"].ToString());
-                            //ProductName.Add(r["productName"].ToString());
-                            if (ProNameQuant.ContainsKey(r["productName"].ToString()))
+
+                            if (branchName == r["branchName"].ToString())
                             {
-                                ProNameQuant[r["productName"].ToString()] += int.Parse(r["quantity"].ToString());
+                                sessionID.Add(r["sessionID"].ToString());
+                                //ProductName.Add(r["productName"].ToString());
+                                if (ProNameQuant.ContainsKey(r["productName"].ToString()))
+                                {
+                                    ProNameQuant[r["productName"].ToString()] += int.Parse(r["quantity"].ToString());
+                                }
+                                else
+                                {
+                                    ProNameQuant.Add(r["productName"].ToString(), int.Parse(r["quantity"].ToString()));
+                                }
+                                cost += decimal.Parse(r["price"].ToString(), System.Globalization.NumberStyles.Currency);
+                                quantity += int.Parse(r["quantity"].ToString());
+                                totalP.Text = "Total: $" + (cost + cost * (decimal)0.13).ToString();
                             }
                             else
                             {
-                                ProNameQuant.Add(r["productName"].ToString(), int.Parse(r["quantity"].ToString()));
+                                MessageBox.Show("Different Branch");
                             }
-                            cost += decimal.Parse(r["price"].ToString(), System.Globalization.NumberStyles.Currency);
-                            quantity += int.Parse(r["quantity"].ToString());
-                            totalP.Text = "Total: $" + (cost + cost * (decimal)0.13).ToString();
                         }
                         else
                         {
-                            MessageBox.Show("Different Branch");
+                            MessageBox.Show("Different Customer");
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Different Customer");
+                        MessageBox.Show("This Item is already added");
                     }
                 }
-                else
-                {
-                    MessageBox.Show("This Item is already added");
-                }
+            }
+            else
+            {
+                MessageBox.Show("Different Branch");
             }
 
         }
@@ -261,7 +270,7 @@ namespace WallyWorld
                 foreach (var key in ProNameQuant.Keys)
                 {
                     string proID = dbms.GetProductID(key.ToString());
-                    dbms.UpdateDatabaseQuantity(proID, ProNameQuant[key], 1);
+                    dbms.UpdateDatabaseQuantity(proID, ProNameQuant[key], 1, branchName);
                 }
                 foreach (var i in sessionID)
                 {

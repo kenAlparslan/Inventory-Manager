@@ -20,6 +20,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
         <Label Content="" x:Name="DisplayBranch" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" FontSize="15" Margin="5,0,0,0" ></Label>
@@ -30,6 +31,7 @@
         <Button Content="Order Lookup" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" Click="Order_Lookup_Click"/>
         <Button Content="Inventory Lookup" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" Click="Inventory_Lookup_Click"/>
         <Button Content="Select Branch" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" Click="Select_Branch_Click"/>
+        <Button Content="Products" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" Click="Add_Product_Click"/>
 
     </Grid>
 </Page>

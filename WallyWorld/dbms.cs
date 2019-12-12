@@ -65,15 +65,21 @@ namespace WallyWorld
          *  Returns     : DataTable
          *      
          */
-        public DataTable DisplayProducts()
+        public DataTable DisplayProducts(string branchName)
         {
 
-            string sqlStatement = @"select * from product";
+            //string sqlStatement = @"select * from product";
+            string sqlStatement = @"select sku,name, wprice, stock, branchname from inventoryInfo where branchname = @br and stock != 0;";
             DataTable dt = new DataTable();
+         
             MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+
+            command.Parameters.AddWithValue("@br", branchName);
             connection.Open();
 
-            using (MySqlDataAdapter da = new MySqlDataAdapter(sqlStatement, connection))
+            //using (MySqlDataAdapter da = new MySqlDataAdapter(sqlStatement, connection))
+            using (MySqlDataAdapter da = new MySqlDataAdapter(command))
                 da.Fill(dt);
 
             connection.Close();
@@ -191,7 +197,7 @@ namespace WallyWorld
         public DataTable DisplayInventory()
         {
 
-            string sqlStatement = @"select name, stock from product";
+            string sqlStatement = @"select name, wprice, stock, discontinued, branchName from inventoryInfo";
             DataTable dt = new DataTable();
             MySqlConnection connection = new MySqlConnection(connectionString);
             connection.Open();
@@ -285,26 +291,35 @@ namespace WallyWorld
          *  Returns     : void
          *      
          */
-        public void UpdateDatabaseQuantity(string id, int quantity, int status)
+        public void UpdateDatabaseQuantity(string id, int quantity, int status, string branchName)
         {
             string sqlStatement = "";
+            //if (status == 0)
+            //{
+            //    sqlStatement = @" update product set stock = stock - @q
+            //                         where SKU = @id;";
+            //}
+            //else
+            //{
+            //    sqlStatement = @" update product set stock = stock + @q
+            //                         where SKU = @id;";
+            //}
+
             if (status == 0)
             {
-                sqlStatement = @" update product set stock = stock - @q
-                                     where SKU = @id;";
+                sqlStatement = @"update inventoryinfo set stock = stock - @q where branchname = @br and sku = @id;";
             }
             else
             {
-                sqlStatement = @" update product set stock = stock + @q
-                                     where SKU = @id;";
+                sqlStatement = @" update inventoryinfo set stock = stock + @q where branchname = @br and sku = @id;";
             }
-            
+
 
             MySqlConnection connection = new MySqlConnection(connectionString);
             MySqlCommand command = new MySqlCommand(sqlStatement, connection);
 
             command.Parameters.AddWithValue("@id", id);
-            
+            command.Parameters.AddWithValue("@br", branchName);
             command.Parameters.AddWithValue("@q", quantity);
 
             connection.Open();
@@ -743,6 +758,110 @@ namespace WallyWorld
             return result;
         }
 
+        public int AddNewProduct(string name, string price)
+        {
+            int result;
+            string sqlStatement = @" insert into product(`name`, wprice)
+                                        values(@name, @price);";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@name", name);
+            command.Parameters.AddWithValue("@price", price);
+            
+            connection.Open();
+            result = command.ExecuteNonQuery();
+            connection.Close();
+            command.Dispose();
+            return result;
+        }
 
+        public int OrderInventory(string branchID, string sku, string amount)
+        {
+            int result;
+            string sqlStatement = @" insert into inventory(branchID, sku, stock)
+                                        values(@bID, @sku, @stock);";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@bID", branchID);
+            command.Parameters.AddWithValue("@sku", sku);
+            command.Parameters.AddWithValue("@stock", amount);
+
+            connection.Open();
+            result = command.ExecuteNonQuery();
+            connection.Close();
+            command.Dispose();
+            return result;
+        }
+
+        public string GetDiscontinuationStatus(string sku)
+        {
+            string result = "";
+            string sqlStatement = @" select discontinued from product where sku = @sku;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+  
+            command.Parameters.AddWithValue("@sku", sku);
+           
+            connection.Open();
+
+            using (MySqlDataReader rdr = command.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    result = rdr["discontinued"].ToString();
+                }
+
+            }
+
+            connection.Close();
+            command.Dispose();
+            return result;
+        }
+
+        public int ToggleDiscontinue(string sku)
+        {
+            int result;
+            string status = GetDiscontinuationStatus(sku);
+            if(status == "1")
+            {
+                status = "-1";
+            }
+            else if(status == "-1")
+            {
+                status = "1";
+            }
+            string sqlStatement = @" update product set discontinued = @val where sku = @sku;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);  
+            command.Parameters.AddWithValue("@sku", sku);
+            command.Parameters.AddWithValue("@val", status);
+
+            connection.Open();
+            result = command.ExecuteNonQuery();
+            connection.Close();
+            command.Dispose();
+            return result;
+        }
+
+        public DataTable GetProductInfo(string productName)
+        {
+
+            //string sqlStatement = @"select * from product";
+            string sqlStatement = @"select * from inventoryinfo where `name` = @name;";
+            DataTable dt = new DataTable();
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+
+            command.Parameters.AddWithValue("@name", productName);
+            connection.Open();
+
+            //using (MySqlDataAdapter da = new MySqlDataAdapter(sqlStatement, connection))
+            using (MySqlDataAdapter da = new MySqlDataAdapter(command))
+                da.Fill(dt);
+
+            connection.Close();
+            return dt;
+        }
     }
 }

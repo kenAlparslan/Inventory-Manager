@@ -136,7 +136,7 @@ namespace WallyWorld
                 ProNameQuant.Add(productName, quantitySelected);
 
 
-                dbms.UpdateDatabaseQuantity(sku, quantitySelected, 1);
+                dbms.UpdateDatabaseQuantity(sku, quantitySelected, 1, branch);
                 if (dbms.RefundOrderLine(orderID, quantitySelected, sku) >= 1)
                 {
                     MessageBox.Show("Order Refunded Successfully");

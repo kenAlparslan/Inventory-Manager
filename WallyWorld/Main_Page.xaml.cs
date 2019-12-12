@@ -123,5 +123,10 @@ namespace WallyWorld
         {
             this.NavigationService.Navigate(new Branch_Page());
         }
+
+        private void Add_Product_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Manage_Products());
+        }
     }
 }
