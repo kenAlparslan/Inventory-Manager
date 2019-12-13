@@ -863,5 +863,69 @@ namespace WallyWorld
             connection.Close();
             return dt;
         }
+        public int UpdateSalesTotalReport(decimal sales, decimal hst, string branchID)
+        {
+            int result;
+            string sqlStatement = @" update salesTotal set totalSales = totalSales + @s, totalHST = totalHST + @hst
+                                        where branchID = @bID;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@s", sales);
+            command.Parameters.AddWithValue("@hst", hst);
+            command.Parameters.AddWithValue("@bID", branchID);
+            connection.Open();
+            result = command.ExecuteNonQuery();
+            connection.Close();
+            command.Dispose();
+            return result;
+        }
+
+        public DataTable ShowSalesReport()
+        {
+            
+            string sqlStatement = @" select * from salesReport;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            DataTable dt = new DataTable();
+            connection.Open();
+            using (MySqlDataAdapter da = new MySqlDataAdapter(command))
+                da.Fill(dt);
+            connection.Close();
+            command.Dispose();
+            return dt;
+        }
+
+        public DataTable ProductVolumeReport()
+        {
+
+            string sqlStatement = @" select * from productvolumereport;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            DataTable dt = new DataTable();
+            connection.Open();
+            using (MySqlDataAdapter da = new MySqlDataAdapter(command))
+                da.Fill(dt);
+            connection.Close();
+            command.Dispose();
+            return dt;
+        }
+
+        public int UpdateProductReport(string branchID, string sku, int quantity)
+        {
+            int result;
+            string sqlStatement = @" update productReport set quantity = quantity + @q
+                                        where branchID = @bID and sku = @sku;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            MySqlCommand command = new MySqlCommand(sqlStatement, connection);
+            command.Parameters.AddWithValue("@q", quantity);
+            command.Parameters.AddWithValue("@sku", sku);
+            command.Parameters.AddWithValue("@bID", branchID);
+            connection.Open();
+            result = command.ExecuteNonQuery();
+            connection.Close();
+            command.Dispose();
+            return result;
+        }
+
     }
 }

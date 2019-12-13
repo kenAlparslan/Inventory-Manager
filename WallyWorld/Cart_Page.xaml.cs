@@ -34,6 +34,7 @@ namespace WallyWorld
         private int totalQuantity;
         private string branchName;
         private decimal cost;
+        private decimal hst;
         private List<string> sessionID;
         
 
@@ -45,6 +46,8 @@ namespace WallyWorld
             ProNameQuant = new Dictionary<string, int>();
             branchName = bName;
             DisplayBranch.Content = "Branch: " + branchName;
+            cost = 0;
+            hst = 0;
         }
         /*
          *  Function    : Show_Cart_Click
@@ -111,6 +114,7 @@ namespace WallyWorld
                     //branchName = bName;
                     quantity = totalStock;
                     cost = price;
+                    hst = cost * (decimal)0.13;
                     totalP.Text = "Total: $" + (cost + cost * (decimal)0.13).ToString();
                     totalP.Visibility = Visibility.Visible;
                     ProNameQuant.Add(pName, totalStock);
@@ -139,6 +143,7 @@ namespace WallyWorld
                                 }
                                 cost += decimal.Parse(r["price"].ToString(), System.Globalization.NumberStyles.Currency);
                                 quantity += int.Parse(r["quantity"].ToString());
+                                hst = cost * (decimal)0.13;
                                 totalP.Text = "Total: $" + (cost + cost * (decimal)0.13).ToString();
                             }
                             else
@@ -188,10 +193,15 @@ namespace WallyWorld
                 int retCode1 = dbms.AddOrder(custID, bID);
                 if (retCode1 == 1)
                 {
+                    if (dbms.UpdateSalesTotalReport(cost, hst, bID) == 1)
+                    {
+                        MessageBox.Show("Sales Total Report Updated successfully");
+                    }
                     foreach (var key in ProNameQuant.Keys)
                     {
                         string proID = dbms.GetProductID(key.ToString());
-
+                        dbms.UpdateProductReport(bID, proID, ProNameQuant[key]);
+                        
                         orderID = dbms.GetOrderID();
                         retCode = dbms.AddOrderLine(orderID, proID, ProNameQuant[key].ToString());
                         if (retCode != 1)

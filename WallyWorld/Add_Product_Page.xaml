@@ -25,7 +25,7 @@
         <Label Content="New Product" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="40"  />
         <Label Content="Product Name:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" FontSize="25"  />
         <Label Content="Price:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" FontSize="25"  />
-        <TextBox x:Name="productName" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Height="40" Width="250" FontSize="25"></TextBox>
+        <TextBox x:Name="productName" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Height="40" Width="400" FontSize="25"></TextBox>
         <TextBox x:Name="productPrice" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Height="40" Width="250" FontSize="25"></TextBox>
         <Button Content="Create" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right"  VerticalAlignment="Center" Height="30" Width="90" Click="Add_Product_To_Inventory_Click"/>
 

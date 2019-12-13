@@ -32,6 +32,7 @@
         <Button Content="Inventory Lookup" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" Click="Inventory_Lookup_Click"/>
         <Button Content="Select Branch" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" Click="Select_Branch_Click"/>
         <Button Content="Products" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" Click="Add_Product_Click"/>
+        <Button Content="Reports" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="50" Width="150" Click="View_Reports_Click"/>
 
     </Grid>
 </Page>
